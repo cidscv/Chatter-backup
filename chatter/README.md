@@ -1,1 +1,7 @@
-run server, run client, edit host and port in init file
+run server, run clientgui
+
+dependencies
+
+javafx-sdk-11.0.2
+
+java jdk 11+
