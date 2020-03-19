@@ -12,8 +12,6 @@ import javafx.stage.Stage;
 
 public class ClientGUI extends Application {
 
-    int indexMsg = 0;
-
     private Socket socket;
     private BufferedReader inputStream;
     private PrintWriter outputStream;
@@ -40,10 +38,10 @@ public class ClientGUI extends Application {
         listView.getItems().add(client.chatLog);
         HBox h1 = new HBox(listView);
 
-        ListView<String> chatListView = new ListView<String>();
-        chatListView.getItems().add("Item 1");
+        ListView<String> chatlog = new ListView<String>();
+        chatlog.getItems().add("Item 1");
 
-        chatListView.setItems(client.chatLog);
+        chatlog.setItems(client.chatLog);
 
         TextField messageField = new TextField();
         messageField.setPromptText("Type...");
@@ -56,16 +54,13 @@ public class ClientGUI extends Application {
             messageField.clear();
 
             String message = msg.getText();
-
             outputStream.write(message+"\n");
             outputStream.flush();
             System.out.println("Sent: " + msg.getText());
-
         });
+
         HBox hbox = new HBox(messageField, send);
-        VBox vbox = new VBox(h1, chatListView,hbox);
-
-
+        VBox vbox = new VBox(h1, chatlog,hbox);
         Scene scene = new Scene(vbox, 300, 300);
 
         primaryStage.setTitle("Chat App");
@@ -78,9 +73,7 @@ public class ClientGUI extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-
         launch(args);
-
     }
 
 }
