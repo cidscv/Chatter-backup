@@ -7,8 +7,12 @@
 
 # members
 Aurie
+
 Paras Chandhok
+
 Xavier Chanthavong
+
 Matthew Mui
+
 Owen Reid
 
