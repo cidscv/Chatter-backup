@@ -1,6 +1,5 @@
 package client;
 
-
 import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;

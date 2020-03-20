@@ -2,5 +2,5 @@
 /.vscode
 /.eclipse
 /.settings
-/.gradle
-/build
+/server
+/client
