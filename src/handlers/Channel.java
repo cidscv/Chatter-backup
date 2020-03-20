@@ -7,8 +7,7 @@ public class Channel {
   private ArrayList<User> users;
   private ArrayList<User> admins;
 
-  public Channel(int id, String name, User creator) {
-    this.id = id;
+  public Channel(String name, User creator) {
     this.name = name;
     this.users = new ArrayList<User>();
     this.users.add(creator);
