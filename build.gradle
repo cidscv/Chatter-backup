@@ -9,18 +9,17 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-core:5.1'
     compile 'com.j256.ormlite:ormlite-jdbc:5.1'
 }
-
 gradle
 sourceCompatibility = 1.8
 version '1.0'
 
 task runServer(type: JavaExec, dependsOn: 'classes') {
-    main = 'Server'
-    classpath = sourceSets.server.Server
+    main = 'server.Server'
+    classpath = sourceSets.main.runtimeClasspath
 }
 
 task runClient(type: JavaExec, dependsOn: 'classes') {
-    main = 'ClientGUI'
-    classpath = sourceSets.client.ClientGUI
+    main = 'client.ClientGUI'
+    classpath = sourceSets.main.runtimeClasspath
 }
 
