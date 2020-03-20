@@ -1,11 +1,4 @@
-plugins {
-    id 'java'
-}
-
-group 'org.example'
-version '1.0-SNAPSHOT'
-
-sourceCompatibility = 1.8
+apply plugin: 'java'
 
 repositories {
     mavenCentral()
@@ -13,4 +6,21 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'com.j256.ormlite:ormlite-core:5.1'
+    compile 'com.j256.ormlite:ormlite-jdbc:5.1'
 }
+
+gradle
+sourceCompatibility = 1.8
+version '1.0'
+
+task runServer(type: JavaExec, dependsOn: 'classes') {
+    main = 'Server'
+    classpath = sourceSets.server.Server
+}
+
+task runClient(type: JavaExec, dependsOn: 'classes') {
+    main = 'ClientGUI'
+    classpath = sourceSets.client.ClientGUI
+}
+
