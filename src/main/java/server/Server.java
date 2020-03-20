@@ -1,4 +1,6 @@
-package chatter;
+package server;
+
+import client.ClientHandler;
 
 import java.net.InetAddress;
 import java.net.ServerSocket;

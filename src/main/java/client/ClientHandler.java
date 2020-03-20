@@ -1,4 +1,6 @@
-package chatter;
+package client;
+
+import server.Server;
 
 import java.io.IOException;
 import java.net.Socket;

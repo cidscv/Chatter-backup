@@ -1,4 +1,4 @@
-package chatter;
+package client;
 
 
 import javafx.collections.ObservableList;
