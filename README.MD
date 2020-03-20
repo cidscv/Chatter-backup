@@ -1,18 +1,11 @@
 # CSCI 2020U Final Project
 
+> Please create a new branch for your own commits
 
-# Please create a new branch for your own commits
+## Members  
 
-
-
-# members
-Aurie
-
-Paras Chandhok
-
-Xavier Chanthavong
-
-Matthew Mui
-
-Owen Reid
-
+- Aurie  
+- Paras Chandhok  
+- Xavier Chanthavong  
+- Matthew Mui  
+- Owen Reid  
