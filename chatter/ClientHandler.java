@@ -1,34 +1,49 @@
 package chatter;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class ClientHandler implements Runnable {
 
-    private Socket client;
+    public Socket client;
     private Server server;
+    private ObjectInputStream inputStream;
+    private ObjectOutputStream outputStream;
 
-    public ClientHandler(Socket client, Server server) {
+    public ClientHandler(Socket client, Server server) throws IOException {
         this.client = client;
         this.server = server;
+        outputStream = new ObjectOutputStream(client.getOutputStream());
+        inputStream = new ObjectInputStream(client.getInputStream());
+    }
+    public ObjectOutputStream getOOS(){
+        return this.outputStream;
     }
 
     @Override
     public void run() {
-        try {
-            Scanner inputStream = new Scanner(client.getInputStream());
-            while (true) {
-                if (!inputStream.hasNext()) {
-                    break;
+        while (true) {
+            System.out.println("listening");
+            Input input =null;
+            try {
+                input = (Input) inputStream.readObject();
+                if (input != null) {
+                    System.out.println("received msg");
+                    switch (input.getType()) {
+                        case TEXT:
+                            server.pushInput(input);
+                            System.out.println(client.getRemoteSocketAddress() + input.getString());
+                            input = null;
+                            break;
+                    }
                 }
-                String chatLine = inputStream.nextLine();
-                System.out.println(client.getRemoteSocketAddress() + chatLine);
-                server.sendChatMessageToAll(chatLine);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+                input = null;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
-
 }

@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.Socket;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+
+import javafx.application.Platform;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,57 +15,54 @@ import javafx.stage.Stage;
 public class ClientGUI extends Application {
 
     private Socket socket;
-    private BufferedReader inputStream;
-    private PrintWriter outputStream;
-    private Client client = new Client();
-    public ListView listView = new ListView();
+    private ObjectInputStream inputStream;
+    private ObjectOutputStream outputStream;
+    private Client client;
 
 
     public ClientGUI() throws IOException {
+        System.out.println("log");
+
+        client = new Client();
         Thread t = new Thread(client);
-        t.setDaemon(true);
         t.start();
+        System.out.println("log");
+
         this.socket = client.chatSocket;
         this.outputStream = client.outputStream;
-        this.inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
+        this.inputStream = client.inputStream;
+        System.out.println("log");
     }
 
+
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        ListView listView = new ListView();
+    public void start(Stage primaryStage){
+        System.out.println("log");
 
-        listView.getItems().add("Item 1");
-        listView.getItems().add("Item 2");
-        listView.getItems().add("Item 3");
-        listView.getItems().add(client.chatLog);
-        HBox h1 = new HBox(listView);
-
-        ListView<String> chatlog = new ListView<String>();
-        chatlog.getItems().add("Item 1");
-
-        chatlog.setItems(client.chatLog);
-
+       ListView<String> chatlog = new ListView<>(client.chatLog);
         TextField messageField = new TextField();
         messageField.setPromptText("Type...");
 
         Button send = new Button("Send");
-
-
+        send.setDefaultButton(true);
         send.setOnAction((ev) -> {
-            TextArea msg = new TextArea(messageField.getText());
+            String text = messageField.getText();
+            System.out.println(messageField.getText());
+            try {
+                client.sendString(text);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             messageField.clear();
-
-            String message = msg.getText();
-            outputStream.write(message+"\n");
-            outputStream.flush();
-            System.out.println("Sent: " + msg.getText());
+            System.out.println("Sent: " + text);
         });
 
-        HBox hbox = new HBox(messageField, send);
-        VBox vbox = new VBox(h1, chatlog,hbox);
+        HBox hbox = new HBox(chatlog, messageField, send);
+        VBox vbox = new VBox(hbox);
         Scene scene = new Scene(vbox, 300, 300);
+        System.out.println("log");
 
-        primaryStage.setTitle("Chat App");
+        primaryStage.setTitle("chatter");
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -72,7 +71,7 @@ public class ClientGUI extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         launch(args);
     }
 

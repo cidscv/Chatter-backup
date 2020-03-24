@@ -3,14 +3,11 @@ package chatter;
 
 import javafx.collections.ObservableList;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Scanner;
 import java.net.InetAddress;
 import javafx.collections.FXCollections;
@@ -22,18 +19,19 @@ import javafx.application.Platform;
 
 public class Client implements Runnable {
 
-    public PrintWriter outputStream;
+    public ObjectOutputStream outputStream;
     public Socket chatSocket;
-    public Scanner inputStream;
-    public BufferedReader serverInput;
+    public ObjectInputStream inputStream;
     private int port = 8080;
     public InetAddress host = InetAddress.getLocalHost();
+    public ClientGUI clientGUI;
 
     public String username;
     public ObservableList<String> chatLog;
 
     public Client() throws IOException {
         chatLog = FXCollections.observableArrayList();
+        //clientGUI =
         initialize();
     }
 
@@ -55,37 +53,45 @@ public class Client implements Runnable {
             e.printStackTrace();
             System.out.println("error connecting");
         }
-        //handle input/output
-        serverInput = new BufferedReader(new InputStreamReader(chatSocket.getInputStream(),"UTF-8"));
-        outputStream = new PrintWriter(chatSocket.getOutputStream());
-
-        //get username
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter Username");
-        username = scanner.next();
+        outputStream = new ObjectOutputStream(chatSocket.getOutputStream());
+        inputStream = new ObjectInputStream(chatSocket.getInputStream());
     }
+    public void sendString(String message) throws IOException {
+        Input string = new Input();
+        string.setType(Input.inputType.TEXT);
+        string.setString(message);
+        outputStream.writeObject(string);
+        outputStream.flush();
+        System.out.println("sent");
+    }
+    public void displayString(Input input){
+        Platform.runLater(() -> chatLog.add(input.getString()));
 
-    //thread listens for server input and updates [observablelist chatlog] <- might get too big
+    }
     @Override
     public void run() {
         System.out.println("listening");
         while (true) {
+            //update rate i crashed my computer hey
             try {
-                System.out.println("client thread running");
-                String serverinput = serverInput.readLine();
-                if(serverinput!=null) {
-                    System.out.println(serverinput);
-                    Platform.runLater(new Runnable() {
-                        public void run() {
-                            chatLog.add(serverinput);
-                        }
-                    });
-                }
-            } catch (SocketException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+                Thread.sleep(400);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            Input input=null;
+
+            try {
+                input = (Input) inputStream.readObject();
+                if(input!=null) {
+                    switch (input.getType()) {
+                        case TEXT:
+                            displayString(input);
+                    }
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                input = null;
+            }
         }
+
     }
 }
