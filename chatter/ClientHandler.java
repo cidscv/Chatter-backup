@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class ClientHandler implements Runnable {
 
     public Socket client;
+    public String username;
     private Server server;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
@@ -25,7 +26,13 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        try {
+            server.updateClientlist();
+        } catch (IOException e) {
+            System.out.println("failed update clientlist");
+            e.printStackTrace();
+        }
+        while (client.isConnected()) {
             System.out.println("listening");
             Input input =null;
             try {
@@ -38,10 +45,13 @@ public class ClientHandler implements Runnable {
                             System.out.println(client.getRemoteSocketAddress() + input.getString());
                             input = null;
                             break;
+                        case FILE:
+                            server.pushInput(input);
+                            System.out.println("got a file from "+client.getRemoteSocketAddress());
+                            break;
                     }
                 }
- //means the socket is closed PROBABLY OR THERE'S SOME OTHER ERROR ಥ_ಥ
-
+                //means the socket is closed PROBABLY OR THERE'S SOME OTHER ERROR ಥ_ಥ
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println(client+": connection closed");
                 try {

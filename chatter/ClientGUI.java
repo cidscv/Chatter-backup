@@ -34,7 +34,7 @@ public class ClientGUI extends Application {
         System.out.println("log");
     }
     @Override
-        public void stop() throws IOException {
+    public void stop() throws IOException {
         System.out.println("Stage is closing");
         outputStream.close();
         inputStream.close();
@@ -43,12 +43,17 @@ public class ClientGUI extends Application {
 
 
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) throws IOException {
+        new FileOutputStream("test.txt", true).close();
+
+        client.sendFile("test.txt");
         System.out.println("log");
 
        ListView<String> chatlog = new ListView<>(client.chatLog);
         TextField messageField = new TextField();
         messageField.setPromptText("Type...");
+        ListView<String> userlist = new ListView<>(client.userList);
+
 
         Button send = new Button("Send");
         send.setDefaultButton(true);
@@ -64,9 +69,9 @@ public class ClientGUI extends Application {
             System.out.println("Sent: " + text);
         });
 
-        HBox hbox = new HBox(chatlog, messageField, send);
+        HBox hbox = new HBox(userlist, chatlog, messageField, send);
         VBox vbox = new VBox(hbox);
-        Scene scene = new Scene(vbox, 300, 300);
+        Scene scene = new Scene(vbox);
         System.out.println("log");
 
         primaryStage.setTitle("chatter");
