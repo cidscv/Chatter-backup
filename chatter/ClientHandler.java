@@ -40,9 +40,17 @@ public class ClientHandler implements Runnable {
                             break;
                     }
                 }
+ //means the socket is closed PROBABLY OR THERE'S SOME OTHER ERROR ಥ_ಥ
+
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-                input = null;
+                System.out.println(client+": connection closed");
+                try {
+                    server.updateClientlist(this);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                //terminate thread
+                return;
             }
         }
     }
