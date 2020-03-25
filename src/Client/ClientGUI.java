@@ -1,5 +1,5 @@
-package chatter.src.Client;
-import chatter.src.Input;
+package Client;
+import handlers.Input;
 
 import javafx.application.Application;
 
