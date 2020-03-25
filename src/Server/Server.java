@@ -1,13 +1,13 @@
 package Server;
 
-import handlers.Input
+import chatter.Input;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-import chatter.src.Input;
+import chatter.Input;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -43,8 +43,8 @@ public class Server {
         System.out.println("listening on port "+port);
         clientList = new ArrayList<>();
         //continuously listen for client connections
-        while(true)
-        {
+        boolean stop = false;
+        while(!stop){
             Socket client = socket.accept();
             System.out.println("New client: " + client.getRemoteSocketAddress());
             //start thread for new client
@@ -54,8 +54,9 @@ public class Server {
             t.start();
             updateClientlist();
             System.out.println("Total clients: " + clientList.size());
-
+            // TODO create a stop sequence
         }
+        // TODO saveState in DataHandler
     }
     public void updateClientlist(ClientHandler handler) throws IOException {
         clientList.remove(handler);

@@ -1,5 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'idea'
 subprojects {
     apply plugin: 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
 }
 
 project(':server') {
@@ -18,8 +28,7 @@ project(':server') {
     }
 
     dependencies {
-        compile 'com.j256.ormlite:ormlite-core:5.1'
-        compile 'com.j256.ormlite:ormlite-jdbc:5.1'
+        compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
     }
 
     jar {
@@ -40,6 +49,14 @@ project(':client') {
                 include 'util/**'
             }
         }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
     }
 
     jar {
