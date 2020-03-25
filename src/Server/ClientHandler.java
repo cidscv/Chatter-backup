@@ -1,6 +1,6 @@
-package chatter.src.Server;
+package Server;
 
-import chatter.src.Input;
+import handlers.Input;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
