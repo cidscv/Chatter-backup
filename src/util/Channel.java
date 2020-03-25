@@ -35,7 +35,7 @@ public class Channel {
     return this.messages;
   }
 
-  public void addMessage(Message Message) {
+  public void addMessage(Message message) {
     this.messages.add(message);
   }
 }
