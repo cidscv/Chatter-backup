@@ -14,7 +14,7 @@ public class User {
     this.channels = new ArrayList<Channel>();
   }
 
-  public User(int id; String username, String password, ArrayList<Channel> channels) {
+  public User(int id, String username, String password, ArrayList<Channel> channels) {
     this.id = id;
     this.username = username;
     this.password = password;
