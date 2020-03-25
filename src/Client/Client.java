@@ -1,7 +1,8 @@
-package chatter;
+package chatter.src.Client;
 
 
 import javafx.collections.ObservableList;
+import chatter.src.Input;
 
 import java.io.*;
 import java.net.Socket;

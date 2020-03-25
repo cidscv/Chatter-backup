@@ -1,4 +1,5 @@
-package chatter;
+package chatter.src.Client;
+import chatter.src.Input;
 
 import java.io.*;
 import java.net.Socket;
