@@ -64,6 +64,13 @@ public class Client implements Runnable {
         username = scanner.next();
     }
 
+    public void logout() throws IOException{
+        chatSocket.close();
+        System.exit(0);
+
+        return;
+    }
+
     //thread listens for server input and updates [observablelist chatlog] <- might get too big
     @Override
     public void run() {
@@ -87,4 +94,5 @@ public class Client implements Runnable {
             }
         }
     }
+
 }

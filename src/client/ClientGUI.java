@@ -44,13 +44,13 @@ public class ClientGUI extends Application {
         MenuBar menuBar = createMenuBar();
         Separator separator = new Separator();
 
-        HBox bottomBar = getStatusBar();
+        HBox bottomBar = createStatusBar();
 
         // work here
         SplitPane mainPane = createMainPane();
 
         vBox.setVgrow(mainPane, Priority.ALWAYS);
-        vBox.getChildren().addAll(menuBar, separator, mainPane, bottomBar);
+        vBox.getChildren().addAll(menuBar, mainPane, bottomBar);
 
         Scene scene = new Scene(vBox, 900, 600);
         primaryStage.setTitle("Instance for " + client.username);
@@ -99,39 +99,27 @@ public class ClientGUI extends Application {
     }
 
     private VBox createChannelList() {
-        VBox channelList = new VBox();
-        channelList.setStyle("-fx-background-color: blanchedalmond;" + "-fx-border-color: dimgrey;" + "-fx-border-width: 2");
+        VBox channelList = new VBox(10);
+        channelList.setStyle("-fx-background-color: #545454;" + "-fx-border-color: black;" + "-fx-border-width: 1");
+        channelList.setAlignment(Pos.TOP_CENTER);
 
-        Button btTest1 = new Button("test");
-        btTest1.setMaxWidth(150);
+        for (int i = 0; i < 15; i++) {
+            if (i % 2 == 0) {
+                Button bt = new Button("test");
+                bt.setMaxWidth(135);
+                bt.setStyle("-fx-background-color: linear-gradient(darkgrey,#999999, grey, #707070,darkgrey);" + "-fx-border-radius: 0;");
+                channelList.getChildren().add(bt);
+            } else {
+                Separator sp = new Separator();
+                sp.setStyle("-fx-fill: #fff");
+                //channelList.getChildren().add(new Separator());
+            }
 
-
-        Button btTest2 = new Button("test");
-        btTest2.setMaxWidth(150);
-        Button btTest3 = new Button("test");
-        btTest3.setMaxWidth(150);
-        Button btTest4 = new Button("test");
-        btTest4.setMaxWidth(150);
-        Button btTest5 = new Button("test");
-        btTest5.setMaxWidth(150);
-        Button btTest6 = new Button("test");
-        btTest6.setMaxWidth(150);
-
-        Separator separator1 = new Separator();
-        Separator separator2 = new Separator();
-        Separator separator3 = new Separator();
-        Separator separator4 = new Separator();
-        Separator separator5 = new Separator();
-
-
-        channelList.getChildren().addAll(btTest1, separator1, btTest2, separator2 ,btTest3, separator3, btTest4,
-                separator4 ,btTest5, separator5, btTest6);
+        }
 
         return channelList;
     }
 
-
-    // get text input from the socket here
     private VBox createChatPane() {
         VBox chatPane = new VBox();
 
@@ -181,22 +169,22 @@ public class ClientGUI extends Application {
         return textArea;
     }
 
-    private HBox getStatusBar(){
+    private HBox createStatusBar(){
         HBox statusBar = new HBox(0);
         statusBar.maxHeight(50);
 
-        Button buttonOne = new Button("A");
-        Button buttonTwo = new Button("B");
-        Button buttonThree = new Button("C");
+        Button btLogout = new Button("Log out");
+        btLogout.setMinWidth(80);
 
-        buttonOne.setMinWidth(80);
-        buttonTwo.setMinWidth(80);
-        buttonThree.setMinWidth(80);
+        btLogout.setOnMouseClicked(e -> {
+            try {
+                client.logout();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
 
-        statusBar.getChildren().add(buttonOne);
-        statusBar.getChildren().add(buttonTwo);
-        statusBar.getChildren().add(buttonThree);
-
+        statusBar.getChildren().add(btLogout);
         return statusBar;
 
     }
@@ -215,7 +203,6 @@ public class ClientGUI extends Application {
         userBar.setStyle("-fx-padding: 4;" + "-fx-border-color: black;");
         userBar.setSpacing(7);
         userBar.setAlignment(Pos.CENTER_LEFT);
-
 
 
         Image userImage = new Image(new File("src/images/pic.png").toURI().toString());
