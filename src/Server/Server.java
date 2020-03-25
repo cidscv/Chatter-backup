@@ -1,4 +1,6 @@
-package chatter.src.Server;
+package Server;
+
+import handlers.Input
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
