@@ -53,8 +53,12 @@ public class Server {
             t.start();
         }
     }
+        public void updateClientlist(ClientHandler handler) throws IOException {
+        clientList.remove(handler);
+        //pushUserList();
+    }
 
-    //handler for output stream to console, for other applications handle outputstream directly
+    //handler for output stream CALL THIS FOR EVERYTHING
     public synchronized void pushInput(Input input) throws IOException {
         Iterator<ClientHandler> clientlist=clientList.iterator();
         while(clientlist.hasNext())
