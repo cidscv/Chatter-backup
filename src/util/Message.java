@@ -11,7 +11,6 @@ public class Message {
   public Message(User user, Channel channel, String message) {
     this.id = LocalDateTime.now();
     this.user = user;
-    this.channel = channel;
     this.message = message;
   }
 
@@ -29,12 +28,6 @@ public class Message {
 
   public User getUser() {
     return this.user;
-  }
-
-  // channel functions
-
-  public Channel getChannel() {
-    return this.channel;
   }
 
   // message functions

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Channel {
   private int id;
   private String name;
+  private ArrayList<Message> messages;
 
   public Channel(String name) {
     this.name = name;
@@ -29,4 +30,12 @@ public class Channel {
     this.name = name;
   }
 
+  // message functions
+  public ArrayList<Message> getMessages() {
+    return this.messages;
+  }
+
+  public void addMessage(Message Message) {
+    this.messages.add(message);
+  }
 }
