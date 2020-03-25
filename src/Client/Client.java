@@ -2,7 +2,7 @@ package Client;
 
 
 import javafx.collections.ObservableList;
-import handlers.Input;
+import util.Input;
 
 import java.io.*;
 import java.net.Socket;

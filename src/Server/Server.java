@@ -1,13 +1,12 @@
 package Server;
 
-import chatter.Input;
+import util.Input;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-import chatter.Input;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;

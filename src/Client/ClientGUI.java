@@ -1,5 +1,5 @@
 package Client;
-import handlers.Input;
+import util.Input;
 
 import javafx.application.Application;
 

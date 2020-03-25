@@ -42,8 +42,7 @@ public class User {
   }
 
   // password functions (need to be hashed)
-  public String test() { return this.password; }
-
+  public String getHash() { return this.password; }
 
   public void setPassword(String password) {
     this.password = BCrypt.hashpw(password, BCrypt.gensalt(10));
