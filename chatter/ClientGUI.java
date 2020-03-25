@@ -33,6 +33,13 @@ public class ClientGUI extends Application {
         this.inputStream = client.inputStream;
         System.out.println("log");
     }
+    @Override
+        public void stop() throws IOException {
+        System.out.println("Stage is closing");
+        outputStream.close();
+        inputStream.close();
+        System.exit(0);
+    }
 
 
     @Override
