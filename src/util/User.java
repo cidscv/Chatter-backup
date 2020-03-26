@@ -2,7 +2,7 @@ package util;
 import java.util.ArrayList;
 import org.mindrot.jbcrypt.*;
 
-public class User {
+public class User implements Serializable {
   private int id;
   private String username;
   private String password;

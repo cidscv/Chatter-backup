@@ -2,7 +2,7 @@ package util;
 
 import java.util.Date;
 
-public class Message {
+public class Message implements Serializable {
   private Date id;
   private User user;
   private Channel channel;

@@ -1,7 +1,7 @@
 package util;
 import java.util.ArrayList;
 
-public class Channel {
+public class Channel implements Serializable {
   private int id;
   private String name;
   private ArrayList<Message> messages;
