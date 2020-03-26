@@ -14,7 +14,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import util.User;
-import util.Input;
 
 
 /*
@@ -118,14 +117,6 @@ public class Login extends Application {
         loginstage.setScene(scene2);
         loginstage.show();
 
-        logBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                User establisheduser = new User(UserTextField.getText(), pwBox.getText());
-                Input reginput = new Input("login");
-                reginput.setUser(establisheduser);
-            }
-        });
-
         // Button allows user to return to home page if mistake has been made
         gobackbtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
@@ -194,9 +185,7 @@ public class Login extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 User newuser = new User(UserTextField.getText(), pwBox.getText());
-                Input reginput = new Input("register");
-                reginput.setUser(newuser);
-
+                // TO DO: SEND USER OBJECT TO SERVER
 
             }
         });

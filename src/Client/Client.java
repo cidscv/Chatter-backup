@@ -1,25 +1,21 @@
-package Client;
+package client;
 
 
 import javafx.collections.ObservableList;
-import util.Input;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.sql.Timestamp;
-import java.time.Instant;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.net.InetAddress;
 import javafx.collections.FXCollections;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-
-import javax.imageio.*;
 
 import javafx.application.Platform;
 
+import util.Input;
+
+import javafx.stage.FileChooser;
 
 
 public class Client implements Runnable {
@@ -27,6 +23,7 @@ public class Client implements Runnable {
     public ObjectOutputStream outputStream;
     public Socket chatSocket;
     public ObjectInputStream inputStream;
+
     private int port = 8080;
     public InetAddress host = InetAddress.getLocalHost();
     public ClientGUI clientGUI;
@@ -34,12 +31,13 @@ public class Client implements Runnable {
     public String username;
     public ObservableList<String> chatLog;
     public ObservableList<String> userList;
+    private ClientViewController controller;
+
 
     public Client() throws IOException {
         chatLog = FXCollections.observableArrayList();
         userList = FXCollections.observableArrayList();
         userList.add("initial test");
-        //clientGUI =
         initialize();
     }
 
@@ -63,6 +61,9 @@ public class Client implements Runnable {
         }
         outputStream = new ObjectOutputStream(chatSocket.getOutputStream());
         inputStream = new ObjectInputStream(chatSocket.getInputStream());
+    }
+    public void setController(ClientViewController controller){
+        this.controller = controller;
     }
 
     public void sendString(String message) throws IOException {
@@ -95,23 +96,21 @@ public class Client implements Runnable {
         }
         byte[] bytes = bos.toByteArray();
         input.setType(Input.inputType.FILE);
-        input.setFile(bytes, filename);
+        input.setFile(bytes, file.getName());
         return input;
     }
-    public void sendFile(String filename) throws IOException {
-        outputStream.writeObject(writeFileToBytes(filename));
+    public void sendFile(File filename) throws IOException {
+        outputStream.writeObject(writeFileToBytes(filename.getAbsolutePath()));
         outputStream.flush();
         System.out.println("sent file as byte array");
-
     }
+
     //assumes utf-8 encoding, size<16mb
-    public File readFileFromBytes(Input input) throws IOException {
-        File someFile = new File(input.getFilename());
-        FileOutputStream fos = new FileOutputStream(someFile);
+    public void readFileFromBytes(Input input, File selectedFile) throws IOException {
+        FileOutputStream fos = new FileOutputStream(selectedFile);
         fos.write(input.getByteArray());
         fos.flush();
         fos.close();
-        return someFile;
     }
 
     public void updateUserlist(Input input){
@@ -147,8 +146,16 @@ public class Client implements Runnable {
                             updateUserlist(input);
                             break;
                         case FILE:
-                            System.out.println("yep i got a file");
-                            readFileFromBytes(input);
+                            System.out.println("received file "+input.getFilename());
+                            Input finalInput = input;
+                            //run on fx thread
+                            Platform.runLater(() -> {
+                                try {
+                                    controller.receivedFile(finalInput);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
                             break;
 
                     }
@@ -160,3 +167,4 @@ public class Client implements Runnable {
 
     }
 }
+
