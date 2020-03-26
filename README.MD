@@ -6,7 +6,7 @@
 
 ### Contributors  
 
-- Aurie  
+- Aurie Tan
 - Paras Chandhok  
 - Xavier Chanthavong  
 - Matthew Mui  
