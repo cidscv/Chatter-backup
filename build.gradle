@@ -1,4 +1,3 @@
-
 def currentOS = OperatingSystem.current()
 def platform
 if (currentOS.isWindows()) {
@@ -9,19 +8,9 @@ if (currentOS.isWindows()) {
     platform = 'mac'
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
-
 subprojects {
     apply plugin: 'java'
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+    apply plugin: 'idea'
 }
 
 project(':server') {
@@ -41,9 +30,15 @@ project(':server') {
 
     dependencies {
         compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+        compile group: 'com.microsoft.sqlserver', name:'mssql-jdbc', version: '8.2.2.jre11'
+
     }
 
     jar {
+        doFirst {
+            from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+        }
+        exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
         manifest {
             attributes 'Main-Class': 'Server.Server',
                     'Implementation-Title': 'Chatter Server',
@@ -62,54 +57,6 @@ project(':client') {
             }
         }
     }
-    
-    repositories {
-        mavenCentral()
-    }
-    plugins {
-  id 'application'
-  id 'org.openjfx.javafxplugin' version '0.0.8'
-  id 'org.beryx.jlink' version '2.15.1'}
-      
-    dependencies {
-       
-        implementation "org.openjfx:javafx-base:11:${platform}"
-    implementation "org.openjfx:javafx-graphics:11:${platform}"
-    implementation "org.openjfx:javafx-controls:11:${platform}"
-    implementation "org.openjfx:javafx-fxml:11:${platform}"
-    compile group: 'com.jfoenix', name: 'jfoenix', version: '9.0.9'
-    }
-    dependencies {
-    implementation group: 'com.jfoenix', name: 'jfoenix', version: '9.0.9'
-}
-
-javafx {
-    version = "13"
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
-}
-
-run {
-    jvmArgs = [
-            "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix",
-            "--add-exports=javafx.controls/com.sun.javafx.scene.control=com.jfoenix",
-            "--add-exports=javafx.base/com.sun.javafx.binding=com.jfoenix",
-            "--add-exports=javafx.graphics/com.sun.javafx.stage=com.jfoenix",
-            "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix",
-    ]
-}
-
-jlink {
-    launcher {
-        name = 'hellofx'
-        jvmArgs = [
-                "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix",
-                "--add-exports=javafx.controls/com.sun.javafx.scene.control=com.jfoenix",
-                "--add-exports=javafx.base/com.sun.javafx.binding=com.jfoenix",
-                "--add-exports=javafx.graphics/com.sun.javafx.stage=com.jfoenix",
-                "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix",
-        ]
-    }
-}
 
     repositories {
         mavenCentral()
@@ -120,6 +67,10 @@ jlink {
     }
 
     jar {
+        doFirst {
+            from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+        }
+        exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
         manifest {
             attributes 'Main-Class': 'Client.ClientGUI',
                     'Implementation-Title': 'Chatter Client',
@@ -127,6 +78,10 @@ jlink {
         }
     }
 }
+
+
+
+
 
 
 
