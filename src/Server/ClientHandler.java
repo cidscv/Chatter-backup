@@ -1,16 +1,16 @@
 package Server;
 
-import util.Input;
+import util.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
 
     public Socket client;
-    public String username;
     private Server server;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
@@ -18,8 +18,8 @@ public class ClientHandler implements Runnable {
     public ClientHandler(Socket client, Server server) throws IOException {
         this.client = client;
         this.server = server;
-        outputStream = new ObjectOutputStream(client.getOutputStream());
-        inputStream = new ObjectInputStream(client.getInputStream());
+        this.outputStream = new ObjectOutputStream(client.getOutputStream());
+        this.inputStream = new ObjectInputStream(client.getInputStream());
     }
     public ObjectOutputStream getOOS(){
         return this.outputStream;
@@ -33,22 +33,32 @@ public class ClientHandler implements Runnable {
             System.out.println("failed update clientlist");
             e.printStackTrace();
         }
+
         while (client.isConnected()) {
             System.out.println("listening");
-            Input input =null;
+            Input input = null;
+            DataHandler dh = new DataHandler();
             try {
-                input = (Input) inputStream.readObject();
+                input = (Input)inputStream.readObject();
+                dh =
                 if (input != null) {
-                    System.out.println("received msg");
-                    switch (input.getType()) {
-                        case TEXT:
-                            server.pushInput(input);
-                            System.out.println(client.getRemoteSocketAddress() + input.getString());
-                            input = null;
+                    System.out.println("received data");
+                    switch (input.getOperation()) {
+                        case "register":
                             break;
-                        case FILE:
-                            server.pushInput(input);
-                            System.out.println("got a file from "+client.getRemoteSocketAddress());
+                        case "login":
+                            break;
+                        case "getAllUsers":
+                            break;
+                        case "getMessagesForChannel":
+                            break;
+                        case "getUsersForChannel":
+                            break;
+                        case "postMessage":
+                            break;
+                        case "addToChannel":
+                            break;
+                        case "removeFromChannel":
                             break;
                     }
                 }
@@ -65,4 +75,6 @@ public class ClientHandler implements Runnable {
             }
         }
     }
+
+
 }
