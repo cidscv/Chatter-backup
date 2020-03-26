@@ -1,5 +1,6 @@
 package util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import org.mindrot.jbcrypt.*;
 import java.net.Socket;

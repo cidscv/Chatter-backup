@@ -1,8 +1,9 @@
 package util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-class Input implements Serializable {
+public class Input implements Serializable {
     private String operation;
     private Channel channel;
     private User user;

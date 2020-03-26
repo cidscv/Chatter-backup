@@ -2,20 +2,19 @@ package client;
 
 
 import javafx.collections.ObservableList;
+import javafx.stage.FileChooser;
+import javafx.collections.FXCollections;
+import javafx.application.Platform;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.net.InetAddress;
 
 import java.util.ArrayList;
-import java.net.InetAddress;
-import javafx.collections.FXCollections;
+import util.*;
 
-import javafx.application.Platform;
 
-import util.Input;
-
-import javafx.stage.FileChooser;
 
 
 public class Client implements Runnable {
@@ -24,7 +23,7 @@ public class Client implements Runnable {
     public Socket chatSocket;
     public ObjectInputStream inputStream;
 
-    private int port = 8080;
+    private int port = SocketSettings.getPort();
     public InetAddress host = InetAddress.getLocalHost();
     public ClientGUI clientGUI;
 
@@ -67,20 +66,18 @@ public class Client implements Runnable {
     }
 
     public void sendString(String message) throws IOException {
-        Input string = new Input();
-        string.setType(Input.inputType.TEXT);
-        string.setString(message);
+        Input string = null;
         outputStream.writeObject(string);
         outputStream.flush();
         System.out.println("sent message");
     }
     public void displayString(Input input){
-        Platform.runLater(() -> chatLog.add(input.getString()));
+        Platform.runLater(() -> chatLog.add(""));
     }
 
     //assumes utf-8 encoding, size<16mb
     public Input writeFileToBytes(String filename) throws FileNotFoundException {
-        Input input = new Input();
+        Input input = null;
         File file = new File(filename);
         FileInputStream fis = new FileInputStream(file);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
