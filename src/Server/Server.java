@@ -2,24 +2,22 @@ package Server;
 
 import util.*;
 
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
-import javafx.scene.shape.Line;
-import javafx.stage.Stage;
 import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.UnknownHostException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
+
 public class Server {
 
-    private final int port = 8080;
+    private final int port = SocketSettings.getPort();
     private ServerSocket socket;
     private ArrayList<ClientHandler> clientList;
     private ObjectOutputStream outputStream;
@@ -42,8 +40,7 @@ public class Server {
         System.out.println("listening on port "+port);
         clientList = new ArrayList<>();
         //continuously listen for client connections
-        boolean stop = false;
-        while(!stop){
+        while(true){
             Socket client = socket.accept();
             System.out.println("New client: " + client.getRemoteSocketAddress());
             //start thread for new client
