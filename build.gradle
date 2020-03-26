@@ -1,3 +1,13 @@
+def currentOS = OperatingSystem.current()
+def platform
+if (currentOS.isWindows()) {
+    platform = 'win'
+} else if (currentOS.isLinux()) {
+    platform = 'linux'
+} else if (currentOS.isMacOsX()) {
+    platform = 'mac'
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
