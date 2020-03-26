@@ -20,16 +20,17 @@ public class Client implements Runnable {
     public ObjectOutputStream outputStream;
     public Socket chatSocket;
     public ObjectInputStream inputStream;
-    private int port=8080;
-    private InetAddress host = InetAddress.getLocalHost();
+    private int port;
+    private InetAddress host;
 
     public String username;
     public ObservableList<String> chatLog;
     public ObservableList<String> userList;
     private ClientViewController controller;
 
-    public Client() throws IOException {
+    public Client(String host, int port) throws IOException {
         this.port = port;
+        this.host = InetAddress.getByName(host);
         chatLog = FXCollections.observableArrayList();
         userList = FXCollections.observableArrayList();
         userList.add("initial test");

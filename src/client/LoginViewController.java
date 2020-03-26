@@ -21,7 +21,6 @@ import java.io.*;
 import java.net.Socket;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 
@@ -30,6 +29,7 @@ public class LoginViewController implements Initializable {
     private String username;
     private String icon;
     private int port;
+    private String host;
     private Socket socket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
@@ -54,10 +54,10 @@ public class LoginViewController implements Initializable {
     @FXML
     private Button btLogin;
 
+    //allows user to pick a icon
     @FXML
     void iconPicker(MouseEvent event) throws FileNotFoundException {
         FileChooser chooser = new FileChooser();
-
         File defaultFile = new File(System.getProperty("user.dir")+"/src/client/images");
         System.out.println(System.getProperty("user.dir"));
         chooser.setTitle("Select profile picture");
@@ -67,19 +67,35 @@ public class LoginViewController implements Initializable {
             this.userIcon = selectedFile.getAbsolutePath();
             Image image = new Image(new FileInputStream(userIcon));
             iconView.setImage(image);}
+            System.out.println(userIcon);
     }
 
     @FXML
     void login(ActionEvent event) throws IOException {
-        client = new Client();
+        //initialize client thread
+        host = hostnameField.getText();
+        port =  Integer.parseInt(portField.getText());
+        username = usernameField.getText();
+
+        if(host!=null){
+            client = new Client(host, port);
+        }
         Thread t = new Thread(client);
         t.setDaemon(true);
         t.start();
         this.socket = client.chatSocket;
         this.outputStream = client.outputStream;
         this.inputStream = client.inputStream;
+        //save settings in config.txt
+        FileWriter writer = new FileWriter("config.txt", false);
+        writer.write(username+System.lineSeparator()+host+System.lineSeparator()+port+System.lineSeparator());
+        writer.flush();
+        writer.close();
+        System.out.println(username+System.lineSeparator()+host+System.lineSeparator()+port+System.lineSeparator());
+        System.out.println("configurations saved to config.txt");
 
         System.out.println("loading fxml");
+        //load fxml
         this.stage = (Stage) btLogin.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ClientView.fxml"));
         Parent root = loader.load();
@@ -87,6 +103,8 @@ public class LoginViewController implements Initializable {
         ClientViewController controller = (ClientViewController) loader.getController();
         controller.setClient(client);
         controller.setChatView();
+        controller.setUsername(usernameField.getText());
+        controller.setUserIcon(userIcon);
         client.setController(controller);
         System.out.println("log");
         stage.setMinWidth(1080);
@@ -95,12 +113,39 @@ public class LoginViewController implements Initializable {
         stage.show();
     }
     @Override
-    public void initialize(URL url, ResourceBundle rb){
+    public void initialize(URL url, ResourceBundle rb) {
+        //rotate logo image
         RotateTransition rt = new RotateTransition(Duration.millis(1000), iconView);
         rt.setByAngle(360);
         rt.setCycleCount(Animation.INDEFINITE);
         rt.setInterpolator(Interpolator.LINEAR);
         rt.play();
+        //default icon
+        this.userIcon = System.getProperty("user.dir") + "/src/client/images/logo.png";
+        //read defaults from config.txt if it exits
+        FileReader reader = null;
+        try {
+            reader = new FileReader("config.txt");
+        } catch (FileNotFoundException e) {
+            return;
+        }
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        try {
+            usernameField.setText(bufferedReader.readLine());
+        } catch (IOException e) {
+            return;
+        }
+        try {
+            hostnameField.setText(bufferedReader.readLine());
+        } catch (IOException e) {
+            return;
+        }
+        try {
+            portField.setText(bufferedReader.readLine());
+            reader.close();
+        } catch (IOException e) {
+            return;
+        }
     }
 
-}
+    }
