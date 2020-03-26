@@ -1,12 +1,15 @@
 package util;
+
 import java.util.ArrayList;
 import org.mindrot.jbcrypt.*;
+import java.net.Socket;
 
 public class User implements Serializable {
   private int id;
   private String username;
   private String password;
   private ArrayList<Channel> channels;
+  private Socket socket;
 
   public User(String username, String password) {
     this.username = username;
@@ -20,6 +23,12 @@ public class User implements Serializable {
     this.password = password;
     this.channels = channels;
   }
+
+  // socket functions
+
+  public Socket getSocket() { return this.socket; }
+
+  public void setSocket(Socket socket) { this.socket = socket; }
 
   // id functions
 
