@@ -105,18 +105,7 @@ public class Server {
     }
 
      public static void main(String[] args) throws IOException {
-        try {
-            DataHandler dh = new DataHandler();
-            User u = new User("weirdguy", "password");
-            dh.createUser(u);
-            ArrayList<User> users = dh.getAllUsers();
-            for(User user : users) {
-                System.out.println(user.getUsername());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //new Server().startServer();
+            new Server().startServer();
     }
 
 }
