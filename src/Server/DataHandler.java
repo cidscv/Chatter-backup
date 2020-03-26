@@ -141,6 +141,7 @@ public class DataHandler {
             statement.execute();
 
             res = statement.getResultSet();
+            res.next();
             user = new User(
                     userid,
                     res.getString("username"),
@@ -163,6 +164,7 @@ public class DataHandler {
             statement.execute();
 
             res = statement.getResultSet();
+            res.next();
             channel = new Channel(
                     res.getInt("id"),
                     res.getString("name")
@@ -178,7 +180,7 @@ public class DataHandler {
 
     public Message createMessage(Message message) throws Exception {
         try {
-            CallableStatement statement = this.connection.prepareCall("{call CreateMessage(?,?,?)}");
+            CallableStatement statement = this.connection.prepareCall("{call CreateMessage(?,?,?,?)}");
 
             statement.setString(1, message.getMessage());
             statement.setInt(2, message.getUser().getId());
@@ -198,7 +200,7 @@ public class DataHandler {
 
     public void createChannel(Channel channel, User user) throws Exception {
         try {
-            CallableStatement statement = this.connection.prepareCall("{call CreateChannel(?,?)}");
+            CallableStatement statement = this.connection.prepareCall("{call CreateChannel(?,?,?)}");
 
             statement.setString(1, channel.getName());
             statement.setInt(2, user.getId());
