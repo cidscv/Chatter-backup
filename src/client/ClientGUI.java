@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.net.Socket;
 
+
 public class ClientGUI extends Application {
 
     private static Stage primaryStage;

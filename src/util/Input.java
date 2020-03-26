@@ -52,3 +52,4 @@ public class Input implements Serializable {
         this.text = msg;
     }
 }
+

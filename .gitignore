@@ -5,3 +5,5 @@
 /.gradle
 /server
 /client
+/build
+.project

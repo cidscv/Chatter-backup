@@ -1,28 +1,26 @@
-package handlers;
+package util;
 
 import java.time.LocalDateTime;
 
 public class Message {
-  private int id;
+  private LocalDateTime id;
   private User user;
   private Channel channel;
   private String message;
-  private LocalDateTime time;
 
   public Message(User user, Channel channel, String message) {
+    this.id = LocalDateTime.now();
     this.user = user;
-    this.channel = channel;
     this.message = message;
-    this.time = LocalDateTime.now();
   }
 
   // id functions
 
-  public int getId() {
+  public LocalDateTime getId() {
     return this.id;
   }
 
-  public void setId(int id) {
+  public void setId(LocalDateTime id) {
     this.id = id;
   }
 
@@ -30,12 +28,6 @@ public class Message {
 
   public User getUser() {
     return this.user;
-  }
-
-  // channel functions
-
-  public Channel getChannel() {
-    return this.channel;
   }
 
   // message functions
@@ -46,13 +38,6 @@ public class Message {
 
   public void editMessage(String message) {
     this.message = message;
-    this.time = LocalDateTime.now();
+    this.id = LocalDateTime.now();
   }
-
-  // time functions
-
-  public LocalDateTime getTime() {
-    return this.time;
-  }
-
 }

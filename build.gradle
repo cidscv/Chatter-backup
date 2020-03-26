@@ -1,3 +1,4 @@
+
 def currentOS = OperatingSystem.current()
 def platform
 if (currentOS.isWindows()) {
@@ -8,8 +9,19 @@ if (currentOS.isWindows()) {
     platform = 'mac'
 }
 
+apply plugin: 'java'
+apply plugin: 'idea'
+
 subprojects {
     apply plugin: 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
 }
 
 project(':server') {
@@ -17,7 +29,7 @@ project(':server') {
         main {
             java {
                 srcDir '../src'
-                include 'server/**'
+                include 'Server/**'
                 include 'util/**'
             }
         }
@@ -28,13 +40,12 @@ project(':server') {
     }
 
     dependencies {
-        compile 'com.j256.ormlite:ormlite-core:5.1'
-        compile 'com.j256.ormlite:ormlite-jdbc:5.1'
+        compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
     }
 
     jar {
         manifest {
-            attributes 'Main-Class': 'server.Server',
+            attributes 'Main-Class': 'Server.Server',
                     'Implementation-Title': 'Chatter Server',
                     'Implementation-Version': 1.0
         }
@@ -46,7 +57,7 @@ project(':client') {
         main {
             java {
                 srcDir '../src'
-                include 'client/**'
+                include 'Client/**'
                 include 'util/**'
             }
         }
@@ -100,9 +111,17 @@ jlink {
     }
 }
 
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+    }
+
     jar {
         manifest {
-            attributes 'Main-Class': 'client.ClientGUI',
+            attributes 'Main-Class': 'Client.ClientGUI',
                     'Implementation-Title': 'Chatter Client',
                     'Implementation-Version': 1.0
         }

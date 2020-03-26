@@ -1,17 +1,13 @@
-package handlers;
+package util;
 import java.util.ArrayList;
 
 public class Channel {
   private int id;
   private String name;
-  private ArrayList<User> users;
-  private ArrayList<User> admins;
+  private ArrayList<Message> messages;
 
-  public Channel(String name, User creator) {
+  public Channel(String name) {
     this.name = name;
-    this.users = new ArrayList<User>();
-    this.users.add(creator);
-    this.admins.add(creator);
   }
 
   // id functions
@@ -34,62 +30,12 @@ public class Channel {
     this.name = name;
   }
 
-  // user functions
-
-  public ArrayList<User> getUsers() {
-    return this.users;
+  // message functions
+  public ArrayList<Message> getMessages() {
+    return this.messages;
   }
 
-  public void addUser(User user) {
-    this.users.add(user);
-    user.userAddChannel(this);
+  public void addMessage(Message message) {
+    this.messages.add(message);
   }
-
-  public void delUser(User user) {
-    this.users.removeIf(u -> {
-      return user.getId() == u.getId();
-    });
-    user.userDelChannel(this);
-  }
-
-  // admin functions
-
-  public ArrayList<User> getAdmins() {
-    return this.admins;
-  }
-
-  public void addAdmin(User user) {
-    this.admins.add(user);
-    user.adminAddChannel(this);
-  }
-
-  public void delAdmin(User user) {
-    this.admins.removeIf(u -> {
-      return user.getId() == u.getId();
-    });
-    user.adminDelChannel(this);
-  }
-
-  // not to be called outside of User Class
-
-  protected void channelAddUser(User user) {
-    this.users.add(user);
-  }
-
-  protected void channelAddAdmin(User user) {
-    this.users.add(user);
-  }
-
-  protected void channelDelUser(User user) {
-    this.users.removeIf(u -> {
-      return user.getId() == u.getId();
-    });
-  }
-
-  protected void channelDelAdmin(User user) {
-    this.users.removeIf(u -> {
-      return user.getId() == u.getId();
-    });
-  }
-
 }
