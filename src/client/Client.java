@@ -6,12 +6,15 @@ import javafx.collections.ObservableList;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.utils.ArrayList;
+
+import java.util.ArrayList;
 import java.net.InetAddress;
 import javafx.collections.FXCollections;
 
 import javafx.application.Platform;
-import utils.Input;
+
+import util.Input;
+
 import javafx.stage.FileChooser;
 
 
@@ -20,6 +23,7 @@ public class Client implements Runnable {
     public ObjectOutputStream outputStream;
     public Socket chatSocket;
     public ObjectInputStream inputStream;
+
     private int port = 8080;
     public InetAddress host = InetAddress.getLocalHost();
     public ClientGUI clientGUI;
@@ -28,6 +32,7 @@ public class Client implements Runnable {
     public ObservableList<String> chatLog;
     public ObservableList<String> userList;
     private ClientViewController controller;
+
 
     public Client() throws IOException {
         chatLog = FXCollections.observableArrayList();
@@ -107,7 +112,7 @@ public class Client implements Runnable {
         fos.flush();
         fos.close();
     }
-    
+
     public void updateUserlist(Input input){
         userList.clear();
         ArrayList list = input.getUserlist();
@@ -116,8 +121,7 @@ public class Client implements Runnable {
             System.out.println(list.get(i));
         };
     }
-    
-    //listener thread
+
     @Override
     public void run() {
         System.out.println("listening");
@@ -163,3 +167,4 @@ public class Client implements Runnable {
 
     }
 }
+

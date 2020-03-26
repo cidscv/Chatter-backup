@@ -5,7 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-import utils.Input;
+
+import util.Input;
+
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;

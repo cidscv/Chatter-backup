@@ -12,19 +12,29 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+
+import javafx.scene.image.Image;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
-import utils.Input;
+
+import util.Input;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import java.io.IOException;
 
 public class ClientViewController {
 
     private Client client;
-    ObservableList<String> chatLog;
+    private ObservableList<String> chatLog;
+    private String username;
+    private String userImage;
+
 
     @FXML
     private Label bannerLabel;
@@ -134,6 +144,8 @@ public class ClientViewController {
     @FXML
     void btSendMessage(ActionEvent event) throws IOException {
         client.sendString(messageField.getText());
+        messageField.clear();
+
     }
 
     @FXML
@@ -146,6 +158,12 @@ public class ClientViewController {
 
     public void initialize(){
     }
+
+    public void setUsername(String username)
+    {   this.username = username;
+        usernameField.setText(username);
+    }
+
     public void setClient(Client client){
         this.client = client;
     }
@@ -154,8 +172,11 @@ public class ClientViewController {
     }
     public void receivedFile(Input input) throws IOException {
         FileChooser chooser = new FileChooser();
-        //set default filename, better way to do this with apachecommons or if the .setInitialFilename actually worked properly
+
         String fileName = input.getFilename();
+        //hacky way to display filename
+
+        //set default filename, better way to do this with apachecommons or if the .setInitialFilename actually worked properly
         chooser.setInitialFileName(fileName+" ");
         chooser.setTitle("Received file, save as...");
         File selectedFile = chooser.showSaveDialog(addButton.getScene().getWindow());
@@ -163,5 +184,9 @@ public class ClientViewController {
             client.readFileFromBytes(input, selectedFile);
         }
     }
-
+    public void setUserIcon(String icon) throws FileNotFoundException {
+        this.userImage = icon;
+        Image image = new Image(new FileInputStream(icon));
+        userIcon.setImage(image);
+    }
 }
