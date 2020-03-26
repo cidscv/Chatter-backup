@@ -1,6 +1,6 @@
 package client;
 
-import utils.Input;
+import util.Input;
 
 import javafx.application.Application;
 
@@ -29,129 +29,37 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.net.Socket;
 
-
 public class ClientGUI extends Application {
 
+    private static Stage primaryStage;
     private Socket socket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private Client client;
 
     public ClientGUI() throws IOException {
-        System.out.println("log");
-
-        client = new Client();
-        Thread t = new Thread(client);
-        t.setDaemon(true);
-        t.start();
-        System.out.println("log");
-
-        this.socket = client.chatSocket;
-        this.outputStream = client.outputStream;
-        this.inputStream = client.inputStream;
-        System.out.println("log");
     }
 
     @Override
-    public void stop() throws IOException {
+    public void stop(){
         System.out.println("Stage is closing");
-        outputStream.close();
-        inputStream.close();
         System.exit(0);
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-
+        this.primaryStage = primaryStage;
 
         System.out.println("loading fxml");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ClientView.fxml"));
-        System.out.println("log");
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginView.fxml"));
         Parent root = loader.load();
-        System.out.println("log");
-
-        ClientViewController controller = (ClientViewController) loader.getController();
-        controller.setClient(client);
-        controller.setChatView();
-        client.setController(controller);
-        System.out.println("log");
 
         primaryStage.setTitle("chatter/v1-1");
-        primaryStage.setScene(new Scene(root, 300, 275,Color.TRANSPARENT));
-        primaryStage.setMinWidth(1080);
-        primaryStage.setMinHeight(720);
+        primaryStage.setResizable(false);
+        primaryStage.setScene(new Scene(root, 300, 500,Color.TRANSPARENT));
         primaryStage.show();
     }
-    private HBox createTextInput() {
-        HBox textArea = new HBox();
-
-        TextField userText = new TextField();
-        userText.setPromptText("Enter message");
-        userText.setPrefSize(500,50);
-        userText.setMinSize(100,50);
-        userText.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                try {
-                    sendText(userText.getText());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                userText.clear();
-            }
-        });
-
-
-        Button sendButton = new Button("Send");
-        sendButton.setMinSize(100,50);
-        sendButton.setMaxSize(100,50);
-        sendButton.setOnAction(e ->
-        {
-            try {
-                sendText(userText.getText());
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            userText.clear();
-        });
-
-        HBox.setHgrow(userText, Priority.ALWAYS);
-        textArea.getChildren().addAll(userText, sendButton);
-
-        return textArea;
+    public static Stage getStage(){
+        return primaryStage;
     }
-    private void logout() throws IOException {
-        System.out.println("Stage is closing");
-        outputStream.close();
-        inputStream.close();
-        Platform.exit();
-        System.exit(0);
-    }
-
-    private HBox createStatusBar(){
-        HBox statusBar = new HBox(0);
-        statusBar.maxHeight(50);
-
-        Button btLogout = new Button("Log out");
-        btLogout.setMinWidth(80);
-
-        btLogout.setOnMouseClicked(e -> {
-            try {
-                logout();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
-
-        statusBar.getChildren().add(btLogout);
-        return statusBar;
-
-    }
-
-    private void sendText(String text) throws IOException {
-        client.sendString(text);
-        return;
-    }
-
-
 }

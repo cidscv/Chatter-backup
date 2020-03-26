@@ -16,7 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
-import utils.Input;
+import util.Input;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +24,8 @@ import java.io.IOException;
 public class ClientViewController {
 
     private Client client;
-    ObservableList<String> chatLog;
+    private ObservableList<String> chatLog;
+    private String username;
 
     @FXML
     private Label bannerLabel;
@@ -134,6 +135,7 @@ public class ClientViewController {
     @FXML
     void btSendMessage(ActionEvent event) throws IOException {
         client.sendString(messageField.getText());
+        messageField.clear();
     }
 
     @FXML
@@ -146,6 +148,9 @@ public class ClientViewController {
 
     public void initialize(){
     }
+    public void setUsername(){
+        usernameField.setText(username);
+    }
     public void setClient(Client client){
         this.client = client;
     }
@@ -154,14 +159,8 @@ public class ClientViewController {
     }
     public void receivedFile(Input input) throws IOException {
         FileChooser chooser = new FileChooser();
-        //set default filename, better way to do this with apachecommons or if the .setInitialFilename actually worked properly
-        //will fail if there's a weird extension, noncritical anyway
-        String extension = "";
         String fileName = input.getFilename();
-        int i = fileName.lastIndexOf('.');
-        if (i >= 0) {
-            extension = fileName.substring(i+1);
-        }
+        //hacky way to display filename
         chooser.setInitialFileName(fileName+" ");
         chooser.setTitle("Received file, save as...");
         File selectedFile = chooser.showSaveDialog(addButton.getScene().getWindow());

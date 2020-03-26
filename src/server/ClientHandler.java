@@ -1,6 +1,6 @@
 package server;
 
-import utils.Input;
+import util.Input;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

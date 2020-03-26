@@ -11,7 +11,7 @@ import java.net.InetAddress;
 import javafx.collections.FXCollections;
 
 import javafx.application.Platform;
-import utils.Input;
+import util.Input;
 import javafx.stage.FileChooser;
 
 
@@ -20,9 +20,8 @@ public class Client implements Runnable {
     public ObjectOutputStream outputStream;
     public Socket chatSocket;
     public ObjectInputStream inputStream;
-    private int port = 8080;
-    public InetAddress host = InetAddress.getLocalHost();
-    public ClientGUI clientGUI;
+    private int port=8080;
+    private InetAddress host = InetAddress.getLocalHost();
 
     public String username;
     public ObservableList<String> chatLog;
@@ -30,6 +29,7 @@ public class Client implements Runnable {
     private ClientViewController controller;
 
     public Client() throws IOException {
+        this.port = port;
         chatLog = FXCollections.observableArrayList();
         userList = FXCollections.observableArrayList();
         userList.add("initial test");
