@@ -6,7 +6,7 @@
 
 ### Contributors  
 
-- Aurie  
+- Aurie Tan
 - Paras Chandhok  
 - Xavier Chanthavong  
 - Matthew Mui  
@@ -20,6 +20,8 @@
 ### Dependencies  
 
 > javafx-sdk-11.0.2  
+> jfoenix-9.0.8
+
 > java jdk 11+  
 
 ## Program Documentation  
