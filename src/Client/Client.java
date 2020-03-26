@@ -14,9 +14,6 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import util.*;
 
-
-
-
 public class Client implements Runnable {
 
     public ObjectOutputStream outputStream;

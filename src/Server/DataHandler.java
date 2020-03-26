@@ -236,7 +236,7 @@ public class DataHandler {
 
     // channel-user functions
 
-    public void addToChannel(User user, Channel channel) throws Exception {
+    public User addToChannel(User user, Channel channel) throws Exception {
         try {
             CallableStatement statement = this.connection.prepareCall("{call AddToChannel(?,?)}");
 
@@ -244,12 +244,16 @@ public class DataHandler {
             statement.setInt(2, channel.getId());
 
             statement.execute();
+
+            user.addChannel(channel);
         } catch(Exception e) {
             e.printStackTrace();
+        } finally {
+            return user;
         }
     }
 
-    public void removeFromChannel(User user, Channel channel) throws Exception {
+    public User removeFromChannel(User user, Channel channel) throws Exception {
         try {
             CallableStatement statement = this.connection.prepareCall("{call RemoveFromChannel(?,?)}");
 
@@ -257,8 +261,12 @@ public class DataHandler {
             statement.setInt(2, channel.getId());
 
             statement.execute();
+
+            user.delChannel(channel);
         } catch(Exception e) {
             e.printStackTrace();
+        } finally {
+            return user;
         }
     }
 
