@@ -1,55 +1,71 @@
 package util;
-import java.io.*;
 
-
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.*;
 
+class Input implements Serializable {
+    private String operation;
+    private Channel channel;
+    private User user;
+    private Message message;
+    private ArrayList<Channel> channelList = new ArrayList<Channel>();
+    private ArrayList<User> userList = new ArrayList<User>();
+    private ArrayList<Message> messageList = new ArrayList<Message>();
 
-public class Input implements Serializable {
-    public inputType type;
-    private String text;
-    private ArrayList<String> userlist;
-    private byte[] bytes;
-    private String filename;
-
-
-    public enum inputType {
-        FILE, IMAGE, TEXT, USERLIST
-    }
-
-    public void setType(inputType type){
-        this.type = type;
-    }
-    public inputType getType() {
-        return type;
+    public Input(String operation) {
+        this.operation = operation;
     }
 
-    public String getString() {
-        return text;
-    }
-    public ArrayList<String> getUserlist(){
-        return userlist;
-    }
-    public byte[] getByteArray(){
-        return bytes;
-    }
-    public String getFilename(){
-        return filename;
-    }
-    public void setFile(byte[] bytes, String filename){
-        this.bytes=bytes;
-        this.filename=filename;
+    public String getOperation() {
+        return this.operation;
     }
 
-    public void setUserlist(ArrayList<String> userlist){
-        userlist.add("userlist is null");
-        if(userlist!=null){
-        this.userlist = userlist;}
+    public Channel getChannel() {
+        return this.channel;
     }
-    public void setString(String msg) {
-        this.text = msg;
+
+    public void setChannel(Channel channel) {
+        this.channel = channel;
     }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Message getMessage() {
+        return this.message;
+    }
+
+    public void setMessage(Message message) {
+        this.message = message;
+    }
+
+    public ArrayList<Channel> getChannelList() {
+        return this.channelList;
+    }
+
+    public void setChannelList(ArrayList<Channel> channelList) {
+        this.channelList = channelList;
+    }
+
+    public ArrayList<User> getUserList() {
+        return this.userList;
+    }
+
+    public void setUserList(ArrayList<User> userList) {
+        this.userList = userList;
+    }
+
+    public ArrayList<Message> getMessageList() {
+        return this.messageList;
+    }
+
+    public void setMessageList(ArrayList<Message> messageList) {
+        this.messageList = messageList;
+    }
+
+    
 }
-

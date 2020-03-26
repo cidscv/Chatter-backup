@@ -1,12 +1,16 @@
 package util;
 import java.util.ArrayList;
 
-public class Channel {
+public class Channel implements Serializable {
   private int id;
   private String name;
   private ArrayList<Message> messages;
 
   public Channel(String name) {
+    this.name = name;
+  }
+  public Channel(int id, String name) {
+    this.id = id;
     this.name = name;
   }
 
