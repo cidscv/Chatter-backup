@@ -1,6 +1,6 @@
 package Server;
 
-import util.Input;
+import util.*;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -105,7 +105,18 @@ public class Server {
     }
 
      public static void main(String[] args) throws IOException {
-        new Server().startServer();
+        try {
+            DataHandler dh = new DataHandler();
+            User u = new User("weirdguy", "password");
+            dh.createUser(u);
+            ArrayList<User> users = dh.getAllUsers();
+            for(User user : users) {
+                System.out.println(user.getUsername());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //new Server().startServer();
     }
 
 }
