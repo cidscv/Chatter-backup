@@ -155,13 +155,7 @@ public class ClientViewController {
     public void receivedFile(Input input) throws IOException {
         FileChooser chooser = new FileChooser();
         //set default filename, better way to do this with apachecommons or if the .setInitialFilename actually worked properly
-        //will fail if there's a weird extension, noncritical anyway
-        String extension = "";
         String fileName = input.getFilename();
-        int i = fileName.lastIndexOf('.');
-        if (i >= 0) {
-            extension = fileName.substring(i+1);
-        }
         chooser.setInitialFileName(fileName+" ");
         chooser.setTitle("Received file, save as...");
         File selectedFile = chooser.showSaveDialog(addButton.getScene().getWindow());
