@@ -29,6 +29,7 @@ project(':server') {
 
     dependencies {
         compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+        compile group: 'com.microsoft.sqlserver', name:'mssql-jdbc', version: '7.0.0.jre8'
     }
 
     jar {
