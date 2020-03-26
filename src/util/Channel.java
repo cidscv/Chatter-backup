@@ -9,6 +9,10 @@ public class Channel {
   public Channel(String name) {
     this.name = name;
   }
+  public Channel(int id, String name) {
+    this.id = id;
+    this.name = name;
+  }
 
   // id functions
 
