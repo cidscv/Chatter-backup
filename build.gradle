@@ -1,32 +1,5 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-
->>>>>>> master
->>>>>>> v1-database
-def currentOS = OperatingSystem.current()
-def platform
-if (currentOS.isWindows()) {
-    platform = 'win'
-} else if (currentOS.isLinux()) {
-    platform = 'linux'
-} else if (currentOS.isMacOsX()) {
-    platform = 'mac'
-<<<<<<< HEAD
-=======
-}
-
 subprojects {
     apply plugin: 'java'
-<<<<<<< HEAD
-=======
->>>>>>> master
-}
-
-subprojects {
-    apply plugin: 'java'
->>>>>>> v1-database
     apply plugin: 'idea'
 }
 
@@ -81,6 +54,7 @@ project(':client') {
 
     dependencies {
         compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+        compile 'com.jfoenix:jfoenix:9.0.8'
     }
 
     jar {
