@@ -2,6 +2,7 @@ package Client;
 
 import util.Input;
 
+
 import javafx.application.Application;
 
 import javafx.application.Platform;
@@ -49,16 +50,22 @@ public class ClientGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        this.primaryStage = primaryStage;
+        try {
 
-        System.out.println("loading fxml");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginView.fxml"));
-        Parent root = loader.load();
+            this.primaryStage = primaryStage;
 
-        primaryStage.setTitle("chatter/v1-1");
-        primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, 300, 500,Color.TRANSPARENT));
-        primaryStage.show();
+            System.out.println("loading fxml");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginView.fxml"));
+
+            Parent root = loader.load();
+
+            primaryStage.setTitle("chatter/v1-1");
+            primaryStage.setResizable(false);
+            primaryStage.setScene(new Scene(root, 300, 500,Color.TRANSPARENT));
+            primaryStage.show();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
     public static Stage getStage(){
         return primaryStage;

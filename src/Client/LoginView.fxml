@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="461.0" prefWidth="281.0" style="-fx-background-color: #FFF0F5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.LoginViewController">
+<BorderPane prefHeight="461.0" prefWidth="281.0" style="-fx-background-color: #FFF0F5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.LoginViewController">
    <center>
       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="442.0" prefWidth="271.0" style="-fx-background-color: #FFFAFA;" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" prefHeight="80.0" prefWidth="241.0" text="Welccome to Chatter" textFill="#594545">
+            <Label alignment="CENTER" prefHeight="80.0" prefWidth="241.0" text="Welcome to Chatter" textFill="#594545">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></Label>

@@ -68,7 +68,7 @@ public class Client implements Runnable {
         return this.currentuser;
     }
 
-    public Channel getCurrentchannel() {
+    public Channel getCurrentChannel() {
         return this.currentchannel;
     }
 

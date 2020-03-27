@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import java.util.ArrayList;
+
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
@@ -25,14 +27,16 @@ public class ClientHandler implements Runnable {
         return this.outputStream;
     }
 
+    public Socket getClient() { return this.client; }
+
     @Override
     public void run() {
-        try {
+        /*try {
             server.updateClientlist();
         } catch (IOException e) {
             System.out.println("failed update clientlist");
             e.printStackTrace();
-        }
+        }*/
 
         while (client.isConnected()) {
             System.out.println("listening");
@@ -45,7 +49,7 @@ public class ClientHandler implements Runnable {
                     switch (input.getOperation()) {
                         case "register":
                             try {
-                                User u = dh.getUser(input.getUser());
+                                User u = dh.createUser(input.getUser());
                                 Input res = new Input("res-register");
                                 res.setUser(u);
                                 this.outputStream.writeObject(res);
@@ -55,7 +59,7 @@ public class ClientHandler implements Runnable {
                             break;
                         case "login":
                             try {
-                                User u = dh.getUser(input.getUser());
+                                User u = dh.getUser(input.getUser().getId());
                                 Input res = new Input("res-login");
                                 res.setUser(u);
                                 this.outputStream.writeObject(res);
@@ -67,7 +71,7 @@ public class ClientHandler implements Runnable {
                             try {
                                 ArrayList<User> u = dh.getAllUsers();
                                 Input res = new Input("res-getAllUsers");
-                                res.setUsers(u);
+                                res.setUserList(u);
                                 this.outputStream.writeObject(res);
                             } catch(Exception e) {
                                 e.printStackTrace();
@@ -75,9 +79,9 @@ public class ClientHandler implements Runnable {
                             break;
                         case "getMessagesForChannel":
                             try {
-                                ArrayList<Message> m = dh.getMessagesForChannel(input.getChannel());
+                                ArrayList<Message> m = dh.getMessagesForChannel(input.getChannel().getId());
                                 Input res = new Input("res-getMessagesForChannel");
-                                res.setMessages(m);
+                                res.setMessageList(m);
                                 this.outputStream.writeObject(res);
                             } catch(Exception e) {
                                 e.printStackTrace();
@@ -85,9 +89,9 @@ public class ClientHandler implements Runnable {
                             break;
                         case "getUsersForChannel":
                             try {
-                                ArrayList<User> u = dh.getUserForChannel(input.getChannel());
+                                ArrayList<User> u = dh.getUsersForChannel(input.getChannel().getId());
                                 Input res = new Input("res-getUsersForChannel");
-                                res.setUsers(u);
+                                res.setUserList(u);
                                 this.outputStream.writeObject(res);
                             } catch(Exception e) {
                                 e.printStackTrace();
@@ -97,7 +101,7 @@ public class ClientHandler implements Runnable {
                             try {
                                 ArrayList<Channel> c = dh.getChannelsForUser(input.getUser().getId());
                                 Input res = new Input("res-getChannelsForUser");
-                                res.setChannels(c);
+                                res.setChannelList(c);
                                 this.outputStream.writeObject(res);
                             } catch(Exception e) {
                                 e.printStackTrace();
@@ -126,7 +130,7 @@ public class ClientHandler implements Runnable {
                             break;
                         case "removeFromChannel":
                             try {
-                                User u = dh.removeFromChannel(input.getUser, input.getChannel());
+                                User u = dh.removeFromChannel(input.getUser(), input.getChannel());
                                 Input res = new Input("res-removeFromChannel");
                                 res.setUser(u);
                                 this.outputStream.writeObject(res);

@@ -20,7 +20,7 @@ import javafx.scene.shape.Circle;
 import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
 
-import util.Input;
+import util.Message;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -132,14 +132,6 @@ public class ClientViewController {
     @FXML
     private Circle connectionIndicator;
 
-    @FXML
-    void btSendFile(ActionEvent event) throws IOException {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Open File");
-        File selectedFile = chooser.showOpenDialog(addButton.getScene().getWindow());
-        if(selectedFile!=null){
-        client.sendFile(selectedFile);}
-    }
 
     @FXML
     void btSendMessage(ActionEvent event) throws IOException {
@@ -165,26 +157,5 @@ public class ClientViewController {
     }
     public void setChatView(){
         chatView.setItems(client.chatLog);
-    }
-
-    public void receivedFile(Input input) throws IOException {
-        FileChooser chooser = new FileChooser();
-
-        String fileName = input.getFilename();
-        //hacky way to display filename
-
-        //set default filename, better way to do this with apachecommons or if the .setInitialFilename actually worked properly
-        chooser.setInitialFileName(fileName+" ");
-        chooser.setTitle("Received file, save as...");
-        File selectedFile = chooser.showSaveDialog(addButton.getScene().getWindow());
-        if(selectedFile!=null){
-            client.readFileFromBytes(input, selectedFile);
-        }
-    }
-
-    public void setUserIcon(String icon) throws FileNotFoundException {
-        this.userImage = icon;
-        Image image = new Image(new FileInputStream(icon));
-        userIcon.setImage(image);
     }
 }

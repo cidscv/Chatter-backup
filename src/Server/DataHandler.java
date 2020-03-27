@@ -121,7 +121,7 @@ public class DataHandler {
             statement.execute();
 
             while(res.next()) {
-                int userdid = res.getInt("id");
+                int userid = res.getInt("id");
                 users.add(new User(
                         userid,
                         res.getString("username"),

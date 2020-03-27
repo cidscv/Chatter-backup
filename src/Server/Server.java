@@ -38,7 +38,7 @@ public class Server {
     public void startServer() throws IOException {
         System.out.println("chat server started on "+ serverAddress());
         System.out.println("listening on port "+port);
-        clientList = new ArrayList<>();
+        clientList = new ArrayList<ClientHandler>();
         //continuously listen for client connections
         while(true){
             Socket client = socket.accept();
@@ -48,35 +48,29 @@ public class Server {
             clientList.add(handler);
             Thread t = new Thread(handler);
             t.start();
-            updateClientlist();
+            //updateClientlist();
             System.out.println("Total clients: " + clientList.size());
-            // TODO create a stop sequence
         }
-        // TODO saveState in DataHandler
     }
     public void updateClientlist(ClientHandler handler) throws IOException {
         clientList.remove(handler);
-        //pushUserList();
+        pushUserList();
     }
     public void updateClientlist() throws IOException {
-        //pushUserList();
+        pushUserList();
     }
 
-
-        public void pushUserList() throws IOException {
+    public void pushUserList() throws IOException {
         System.out.println("pushing userlist");
         ArrayList<String> userList = new ArrayList<String>();
-        userList.add("new test");
+
         Iterator<ClientHandler> clientlist=clientList.iterator();
-        while(clientlist.hasNext()){
+        do{
             ClientHandler handler = clientlist.next();
-            userList.add("test");
-            System.out.println("test");
-        }
+            userList.add(handler.getClient().toString());
+        }while(clientlist.hasNext());
         if (userList!=null){
-            Input input = new Input();
-            input.setType(Input.inputType.USERLIST);
-            input.setUserlist(userList);
+            Input input = new Input("res-usersOnline");
             pushInput(input);}
         else {
             System.out.print("userlist is null");

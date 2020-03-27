@@ -78,7 +78,7 @@ public class LoginViewController implements Initializable {
         username = usernameField.getText();
 
         if(host!=null){
-            client = new Client(host, port);
+            client = new Client();
         }
         Thread t = new Thread(client);
         t.setDaemon(true);
@@ -103,8 +103,6 @@ public class LoginViewController implements Initializable {
         ClientViewController controller = (ClientViewController) loader.getController();
         controller.setClient(client);
         controller.setChatView();
-        controller.setUsername(usernameField.getText());
-        controller.setUserIcon(userIcon);
         client.setController(controller);
         System.out.println("log");
         stage.setMinWidth(1080);
