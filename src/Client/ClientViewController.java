@@ -1,4 +1,4 @@
-package client;
+package Client;
 
 import com.jfoenix.controls.JFXTextArea;
 import javafx.application.Platform;
@@ -143,7 +143,7 @@ public class ClientViewController {
 
     @FXML
     void btSendMessage(ActionEvent event) throws IOException {
-        client.sendString(messageField.getText());
+        //client.sendString(messageField.getText());
         messageField.clear();
 
     }

@@ -1,4 +1,4 @@
-package client;
+package Client;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -13,7 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import util.User;
+import util.*;
+
 
 
 /*
@@ -117,6 +118,14 @@ public class Login extends Application {
         loginstage.setScene(scene2);
         loginstage.show();
 
+        logbtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                User establisheduser = new User(userTextField.getText(), pwBox.getText());
+                Input loginput = new Input("login");
+                loginput.setUser(establisheduser);
+            }
+        });
+
         // Button allows user to return to home page if mistake has been made
         gobackbtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
@@ -185,8 +194,8 @@ public class Login extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 User newuser = new User(UserTextField.getText(), pwBox.getText());
-                // TO DO: SEND USER OBJECT TO SERVER
-
+                Input reginput = new Input("register");
+                reginput.setUser(newuser);
             }
         });
 

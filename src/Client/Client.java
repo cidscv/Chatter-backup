@@ -1,4 +1,4 @@
-package client;
+package Client;
 
 
 import javafx.collections.ObservableList;
@@ -32,10 +32,13 @@ public class Client implements Runnable {
     public ObservableList<String> userList;
     private ClientViewController controller;
 
+    public User currentuser;
+
 
     public Client() throws IOException {
         chatLog = FXCollections.observableArrayList();
         userList = FXCollections.observableArrayList();
+        currentuser = null;
         userList.add("initial test");
         initialize();
     }
@@ -65,58 +68,33 @@ public class Client implements Runnable {
         this.controller = controller;
     }
 
-    public void sendString(String message) throws IOException {
-        Input string = null;
-        outputStream.writeObject(string);
-        outputStream.flush();
-        System.out.println("sent message");
-    }
-    public void displayString(Input input){
-        Platform.runLater(() -> chatLog.add(""));
-    }
-
-    //assumes utf-8 encoding, size<16mb
-    public Input writeFileToBytes(String filename) throws FileNotFoundException {
-        Input input = null;
-        File file = new File(filename);
-        FileInputStream fis = new FileInputStream(file);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] buffer = new byte[16384];
-        int n;
-
+    public void register(Input reginput) {
         try {
-            while ((n = fis.read(buffer, 0, buffer.length)) != -1) {
-                bos.write(buffer, 0, n);
-                System.out.println("sent " + n + " bytes to output");
-            }
-        } catch (IOException ex) {
+            outputStream.writeObject(reginput);
+            outputStream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        byte[] bytes = bos.toByteArray();
-        input.setType(Input.inputType.FILE);
-        input.setFile(bytes, file.getName());
-        return input;
-    }
-    public void sendFile(File filename) throws IOException {
-        outputStream.writeObject(writeFileToBytes(filename.getAbsolutePath()));
-        outputStream.flush();
-        System.out.println("sent file as byte array");
+
     }
 
-    //assumes utf-8 encoding, size<16mb
-    public void readFileFromBytes(Input input, File selectedFile) throws IOException {
-        FileOutputStream fos = new FileOutputStream(selectedFile);
-        fos.write(input.getByteArray());
-        fos.flush();
-        fos.close();
+    public void login(Input loginput) {
+        try {
+            outputStream.writeObject(loginput);
+            outputStream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void updateUserlist(Input input){
-        userList.clear();
-        ArrayList list = input.getUserlist();
-        for(int i = 0; i < list.size(); i++)
-        {
-            System.out.println(list.get(i));
-        };
+    public void getAllUsers() {
+        try {
+            Input allusers = new Input("getallusers");
+            outputStream.writeObject(allusers);
+            outputStream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -130,37 +108,36 @@ public class Client implements Runnable {
                 e.printStackTrace();
             }
             Input input=null;
-
             try {
-                input = (Input) inputStream.readObject();
-                if(input!=null) {
-                    switch (input.getType()) {
-                        case TEXT:
-                            displayString(input);
+                input = (Input)inputStream.readObject();
+                if (input != null) {
+                    System.out.println("received data");
+                    switch (input.getOperation()) {
+                        case "res-register":
+                            this.currentuser = input.getUser();
                             break;
-                        case USERLIST:
-                            System.out.println("hello why is this running");
-                            updateUserlist(input);
+                        case "res-login":
+                            this.currentuser = input.getUser();
                             break;
-                        case FILE:
-                            System.out.println("received file "+input.getFilename());
-                            Input finalInput = input;
-                            //run on fx thread
-                            Platform.runLater(() -> {
-                                try {
-                                    controller.receivedFile(finalInput);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            });
+                        case "res-getAllUsers":
                             break;
-
+                        case "res-getMessagesForChannel":
+                            break;
+                        case "res-getUsersForChannel":
+                            break;
+                        case "res-postMessage":
+                            break;
+                        case "res-addToChannel":
+                            break;
+                        case "res-removeFromChannel":
+                            break;
                     }
                 }
-            } catch (IOException | ClassNotFoundException e) {
-                input = null;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
+
 
     }
 }
