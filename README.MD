@@ -6,11 +6,16 @@
 
 ### Contributors  
 
-- Aurie Tan "rieryn"  
-- Paras Chandhok "ParasUOIT"  
-- Matthew Mui (Pair programming with ParasUOIT)  
-- Xavier Chanthavong "XavierChanth"  
-- Owen Reid "cidscv"  
+- Aurie Tan "rieryn"
+Worked on login gui, login functions, client functionality
+- Paras Chandhok "ParasUOIT"
+Worked on login gui, chat gui, and login controller
+- Matthew Mui (Pair programming with ParasUOIT)
+Worked with Para on everything
+- Xavier Chanthavong "XavierChanth"
+Worked on database, server side functions, gradle and dependencies
+- Owen Reid "cidscv"
+Worked on login/register gui, client side functions, hooking up client frontend to backend
 
 ### Run Program  
 
@@ -24,16 +29,4 @@
 
 > java jdk 11+  
 
-## Program Documentation  
-
-### Client  
-
-#### User Interface  
-
-#### Client-side Handlers  
-
-### Server  
-
-#### Server-side Handlers  
-
-#### Database  
+Repository URL: https://github.com/csci2020u-cfp-xomap/CSCI2020_Final_Project.git
