@@ -30,10 +30,23 @@ public class Client implements Runnable {
     private ClientViewController controller;
 
     private User currentuser;
-
+    private ArrayList<User> allUsers;
     private Channel currentchannel;
+    private ArrayList<Message> messages;
+    private ArrayList<User> channelUsers;
+    private ArrayList<Channel> userChannels;
 
     public Client() throws IOException {
+        chatLog = FXCollections.observableArrayList();
+        userList = FXCollections.observableArrayList();
+        currentuser = null;
+        currentchannel = null;
+        userList.add("initial test");
+        initialize();
+    }
+    public Client(String host, int port) throws IOException {
+        this.host = InetAddress.getByName(host);
+        this.port = port;
         chatLog = FXCollections.observableArrayList();
         userList = FXCollections.observableArrayList();
         currentuser = null;
@@ -183,30 +196,37 @@ public class Client implements Runnable {
                     switch (input.getOperation()) {
                         case "res-register":
                             this.currentuser = input.getUser();
+                            System.out.println("received");
                             break;
                         case "res-login":
                             this.currentuser = input.getUser();
+
                             break;
                         case "res-getAllUsers":
-                            // use this user list to add a user to a channel
+                            this.allUsers = input.getUserList();
                             break;
                         case "res-getMessagesForChannel":
                             //update messages for a channel in channels here
+                            this.messages = input.getMessageList();
                             break;
                         case "res-getUsersForChannel":
                             // use this userlist to display in the side bar
+                            this.channelUsers = input.getUserList();
                             break;
                         case "res-getChannelsForUser":
                             // display channels on the side
+                            this.userChannels = input.getChannelList();
                             break;
                         case "res-postMessage":
-                            // send a message/file
+                            // send a message
                             break;
                         case "res-addToChannel":
                             // add a user to channel
+                            this.currentuser.addChannel(input.getChannel());
                             break;
                         case "res-removeFromChannel":
                             // remove a user from the channel
+                            this.currentuser.delChannel(input.getChannel());
                             break;
                     }
                 }

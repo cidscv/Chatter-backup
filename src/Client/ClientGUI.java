@@ -33,7 +33,7 @@ import java.net.Socket;
 
 public class ClientGUI extends Application {
 
-    private static Stage primaryStage;
+    private static Stage stage;
     private Socket socket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
@@ -51,9 +51,6 @@ public class ClientGUI extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-
-            this.primaryStage = primaryStage;
-
             System.out.println("loading fxml");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginView.fxml"));
 
@@ -62,12 +59,19 @@ public class ClientGUI extends Application {
             primaryStage.setTitle("chatter/v1-1");
             primaryStage.setResizable(false);
             primaryStage.setScene(new Scene(root, 300, 500,Color.TRANSPARENT));
-            primaryStage.show();
+
+            stage = primaryStage;
+            stage.show();
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
     public static Stage getStage(){
-        return primaryStage;
+        return stage;
     }
+    public static void setStage(Stage st) {
+        stage = st;
+        stage.show();
+    }
+
 }
