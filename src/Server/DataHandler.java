@@ -114,16 +114,22 @@ public class DataHandler {
         }
     }
 
-    public ArrayList<String> getUserNamesForChannel(int channelid) throws Exception {
+    public ArrayList<User> getUsersForChannel(int channelid) throws Exception {
         ResultSet res = null;
-        ArrayList<String> users = new ArrayList<String>();
+        ArrayList<User> users = new ArrayList<User>();
         try {
             CallableStatement statement = this.connection.prepareCall("{call GetUsersForChannel(?)}");
             statement.setInt(1, channelid);
             statement.execute();
 
             while(res.next()) {
-                users.add(res.getString("username"));
+                int userdid = res.getInt("id");
+                users.add(new User(
+                        userid,
+                        res.getString("username"),
+                        res.getString("password"),
+                        this.getChannelsForUser(userid))
+                );
             }
         } catch(Exception e) {
             e.printStackTrace();

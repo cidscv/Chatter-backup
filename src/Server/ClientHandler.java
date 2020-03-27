@@ -93,6 +93,16 @@ public class ClientHandler implements Runnable {
                                 e.printStackTrace();
                             }
                             break;
+                        case "getChannelsForUser":
+                            try {
+                                ArrayList<Channel> c = dh.getChannelsForUser(input.getUser().getId());
+                                Input res = new Input("res-getChannelsForUser");
+                                res.setChannels(c);
+                                this.outputStream.writeObject(res);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
+                            break;
                         case "postMessage":
                             // TODO figure out how to send message to everyone
                             try {
