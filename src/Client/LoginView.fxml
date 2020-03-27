@@ -49,13 +49,13 @@
                <children>
                   <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="81.0" text="Username: " />
                   <TextField fx:id="usernameField" prefHeight="26.0" prefWidth="135.0" style="-fx-effect: dropshadow( gaussian ,  #FFF0F5, 1,0,0,1 );" GridPane.columnIndex="1" />
+                  <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="82.0" text="Password: " GridPane.rowIndex="1" />
+                  <TextField fx:id="passwordField" style="-fx-effect: dropshadow( gaussian ,  #FFF0F5, 1,0,0,1 );" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="82.0" text="Hostname: " GridPane.rowIndex="2" />
                   <TextField fx:id="hostnameField" style="-fx-effect: dropshadow( gaussian ,  #FFF0F5, 1,0,0,1 );" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="81.0" text="Port: " GridPane.rowIndex="3" />
-                  <TextField fx:id="portField" style="-fx-effect: dropshadow( gaussian ,  #FFF0F5, 1,0,0,1 );" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="portField" style="-fx-effect: dropshadow( gaussian ,  #FFF0F5, 1,0,0,1 );" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Button fx:id="btLogin" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #F0F8FF; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 5,0,0,1 );" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="82.0" text="Password: " GridPane.rowIndex="1" />
-                  <TextField fx:id="passwordField" style="-fx-effect: dropshadow( gaussian ,  #FFF0F5, 1,0,0,1 );" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Button fx:id="btRegister" mnemonicParsing="false" onAction="#register" prefHeight="14.0" prefWidth="67.0" style="-fx-background-color: #F0F8FF; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 5,0,0,1 );" text="Register" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                </children>
             </GridPane>

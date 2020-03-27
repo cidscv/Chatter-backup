@@ -17,52 +17,12 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="         -fx-background-size: 1200 900;         -fx-background-radius: 30;         -fx-border-radius: 30;         -fx-border-width:5;         -fx-background-color:#eef0ee; " fx:controller = "client.ClientViewController" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-size: 1200 900;-fx-background-radius: 30;-fx-border-radius: 30;-fx-border-width:5;-fx-background-color:#eef0ee;" fx:controller="Client.ClientViewController" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <VBox prefHeight="54.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="bannerLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="86.0" prefWidth="809.0" style="-fx-background-color: #ffd497;" text=":logo: Welcome to chatter! Banner file:image some stuff" textFill="#6f6e6e" VBox.vgrow="ALWAYS" />
             <HBox prefHeight="46.0" prefWidth="800.0" style="-fx-background-color: #FFB6C1;" />
-            <MenuBar fx:id="menubar" opacity="0.69" prefHeight="11.0" prefWidth="800.0" style="-fx-background-color: #fffade;">
-              <menus>
-                <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
-                  <items>
-                        <MenuItem fx:id="btAddFile" mnemonicParsing="false" text="Send File..." />
-                        <MenuItem fx:id="btAddImage" mnemonicParsing="false" text="Send Image..." />
-                        <MenuItem fx:id="btSaveChat" mnemonicParsing="false" text="Save chatlog" />
-                    <MenuItem fx:id="btLogout" mnemonicParsing="false" onAction="#logout" text="logout..." />
-                  </items>
-                </Menu>
-                <Menu fx:id="optionMenu" mnemonicParsing="false" text="Options">
-                  <items>
-                        <MenuItem fx:id="btProfile" mnemonicParsing="false" text="Change Icon" />
-                        <MenuItem fx:id="btSettings" mnemonicParsing="false" text="Settings" />
-                  </items>
-                </Menu>
-                  <Menu fx:id="gameMenu" mnemonicParsing="false" text="Games">
-                    <items>
-                      <MenuItem fx:id="btBattleships" mnemonicParsing="false" text="Battleships" />
-                    </items>
-                  </Menu>
-                  <Menu fx:id="musicMenu" mnemonicParsing="false" text="Music">
-                    <items>
-                        <MenuItem fx:id="btPlayMusic" mnemonicParsing="false" text="Play/Pause" />
-                      <MenuItem fx:id="btMuteMusic" mnemonicParsing="false" text="Mute" />
-                        <MenuItem fx:id="btAddMusic" mnemonicParsing="false" text="Play from file..." />
-                    </items>
-                  </Menu>
-                  <Menu fx:id="toolMenu" mnemonicParsing="false" text="Tools">
-                    <items>
-                      <MenuItem fx:id="btScheduler" mnemonicParsing="false" text="Scheduler" />
-                    </items>
-                  </Menu>
-                <Menu fx:id="aboutMenu" mnemonicParsing="false" text="About">
-                  <items>
-                    <MenuItem fx:id="btAbout" mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
          </children>
       </VBox>
    </top>
