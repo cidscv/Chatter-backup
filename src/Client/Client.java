@@ -32,13 +32,15 @@ public class Client implements Runnable {
     public ObservableList<String> userList;
     private ClientViewController controller;
 
-    public User currentuser;
+    private User currentuser;
 
+    private Channel currentchannel;
 
     public Client() throws IOException {
         chatLog = FXCollections.observableArrayList();
         userList = FXCollections.observableArrayList();
         currentuser = null;
+        currentchannel = null;
         userList.add("initial test");
         initialize();
     }
@@ -64,6 +66,15 @@ public class Client implements Runnable {
         outputStream = new ObjectOutputStream(chatSocket.getOutputStream());
         inputStream = new ObjectInputStream(chatSocket.getInputStream());
     }
+
+    public User getCurrentUser() {
+        return this.currentuser;
+    }
+
+    public Channel getCurrentchannel() {
+        return this.currentchannel;
+    }
+
     public void setController(ClientViewController controller){
         this.controller = controller;
     }
@@ -121,6 +132,16 @@ public class Client implements Runnable {
         try {
             Input getusers = new Input("getUsers");
             outputStream.writeObject(getusers);
+            outputStream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getChannelsForUser() {
+        try {
+            Input getchannels = new Input("getChannels");
+            outputStream.writeObject(getchannels);
             outputStream.flush();
         } catch (Exception e) {
             e.printStackTrace();
