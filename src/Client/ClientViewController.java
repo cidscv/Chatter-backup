@@ -1,4 +1,4 @@
-package client;
+package Client;
 
 import com.jfoenix.controls.JFXTextArea;
 import javafx.application.Platform;
@@ -143,9 +143,10 @@ public class ClientViewController {
 
     @FXML
     void btSendMessage(ActionEvent event) throws IOException {
-        client.sendString(messageField.getText());
+        String msg = messageField.getText();
+        Message m = new Message(client.getCurrentUser(), client.getCurrentChannel(), msg);
+        client.sendMessage(m);
         messageField.clear();
-
     }
 
     @FXML
@@ -159,17 +160,13 @@ public class ClientViewController {
     public void initialize(){
     }
 
-    public void setUsername(String username)
-    {   this.username = username;
-        usernameField.setText(username);
-    }
-
     public void setClient(Client client){
         this.client = client;
     }
     public void setChatView(){
-        chatView.setItems(client.chatLog);;
+        chatView.setItems(client.chatLog);
     }
+
     public void receivedFile(Input input) throws IOException {
         FileChooser chooser = new FileChooser();
 
@@ -184,6 +181,7 @@ public class ClientViewController {
             client.readFileFromBytes(input, selectedFile);
         }
     }
+
     public void setUserIcon(String icon) throws FileNotFoundException {
         this.userImage = icon;
         Image image = new Image(new FileInputStream(icon));

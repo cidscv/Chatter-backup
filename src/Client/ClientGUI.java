@@ -1,4 +1,4 @@
-package client;
+package Client;
 
 import util.Input;
 
