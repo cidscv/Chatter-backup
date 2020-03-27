@@ -12,8 +12,6 @@ import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.sql.Types;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDriver;
-
 public class DataHandler {
 
     private String url;
