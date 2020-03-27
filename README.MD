@@ -7,15 +7,15 @@
 ### Contributors  
 
 - Aurie Tan "rieryn"
-Worked on login gui, login functions, client functionality
+[Worked on login gui, login functions, client functionality]
 - Paras Chandhok "ParasUOIT"
-Worked on login gui, chat gui, and login controller
+[Worked on login gui, chat gui, and login controller]
 - Matthew Mui (Pair programming with ParasUOIT)
-Worked with Para on everything
+[Worked with Paras on everything]
 - Xavier Chanthavong "XavierChanth"
-Worked on database, server side functions, gradle and dependencies
+[Worked on database, server side functions, gradle and dependencies]
 - Owen Reid "cidscv"
-Worked on login/register gui, client side functions, hooking up client frontend to backend
+[Worked on login/register gui, client side functions, hooking up client frontend to backend]
 
 ### Run Program  
 
