@@ -24,4 +24,5 @@
 
 > java jdk 11+  
 
+### For Prof and TA's
 > v2 is most up to date branch
