@@ -99,8 +99,48 @@ public class Client implements Runnable {
 
     public void sendMessage(Message newmessage) {
         try {
-            Input allusers = new Input("postMessage");
-            outputStream.writeObject(allusers);
+            Input postmessages = new Input("postMessage");
+            outputStream.writeObject(postmessages);
+            outputStream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getMessagesForChannel() {
+        try {
+            Input getmessages = new Input("getMessages");
+            outputStream.writeObject(getmessages);
+            outputStream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getUsersForChannel() {
+        try {
+            Input getusers = new Input("getUsers");
+            outputStream.writeObject(getusers);
+            outputStream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addToChannel() {
+        try {
+            Input addtochannel = new Input("addToChannel");
+            outputStream.writeObject(addtochannel);
+            outputStream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeFromChannel() {
+        try {
+            Input removefromchannel = new Input("removeFromChannel");
+            outputStream.writeObject(removefromchannel);
             outputStream.flush();
         } catch (Exception e) {
             e.printStackTrace();
