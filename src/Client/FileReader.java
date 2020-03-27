@@ -1,11 +1,9 @@
 package Client;
 
 import java.io.*;
-import util.Input;
 
 public class FileReader {
-    public static Input writeFileToBytes(String filename) throws FileNotFoundException {
-        Input input = null;
+    public static byte[] readBytesFromFile(String filename) throws FileNotFoundException {
         File file = new File(filename);
         FileInputStream fis = new FileInputStream(file);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -19,15 +17,12 @@ public class FileReader {
             }
         } catch (IOException ex) {
         }
-        byte[] bytes = bos.toByteArray();
-        input.setType(Input.inputType.FILE);
-        input.setFile(bytes, file.getName());
-        return input;
+        return bos.toByteArray();
     }
 
-    public static void readFileFromBytes(Input input, File selectedFile) throws IOException {
+    public static void writeFileFromBytes(byte[] bytes, File selectedFile) throws IOException {
         FileOutputStream fos = new FileOutputStream(selectedFile);
-        fos.write(input.getByteArray());
+        fos.write(bytes);
         fos.flush();
         fos.close();
     }
