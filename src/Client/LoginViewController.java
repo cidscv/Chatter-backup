@@ -81,7 +81,7 @@ public class LoginViewController implements Initializable {
         username = usernameField.getText();
 
         if(host!=null){
-            client = new Client();
+            client = new Client(host, port);
         }
         Thread t = new Thread(client);
         t.setDaemon(true);

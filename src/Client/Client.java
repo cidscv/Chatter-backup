@@ -33,7 +33,17 @@ public class Client implements Runnable {
 
     private Channel currentchannel;
 
-    public Client() throws IOException {
+    public Client(InetAddress host, int port) throws IOException {
+        chatLog = FXCollections.observableArrayList();
+        userList = FXCollections.observableArrayList();
+        currentuser = null;
+        currentchannel = null;
+        userList.add("initial test");
+        initialize();
+    }
+    public Client(InetAddress host, int port) throws IOException {
+        this.host = host;
+        this.port = port;
         chatLog = FXCollections.observableArrayList();
         userList = FXCollections.observableArrayList();
         currentuser = null;
