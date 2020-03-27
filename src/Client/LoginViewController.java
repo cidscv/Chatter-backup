@@ -54,6 +54,9 @@ public class LoginViewController implements Initializable {
     @FXML
     private Button btLogin;
 
+    @FXML
+    private Button btRegister;
+
     //allows user to pick a icon
     @FXML
     void iconPicker(MouseEvent event) throws FileNotFoundException {
@@ -72,6 +75,47 @@ public class LoginViewController implements Initializable {
 
     @FXML
     void login(ActionEvent event) throws IOException {
+        //initialize client thread
+        host = hostnameField.getText();
+        port =  Integer.parseInt(portField.getText());
+        username = usernameField.getText();
+
+        if(host!=null){
+            client = new Client();
+        }
+        Thread t = new Thread(client);
+        t.setDaemon(true);
+        t.start();
+        this.socket = client.chatSocket;
+        this.outputStream = client.outputStream;
+        this.inputStream = client.inputStream;
+        //save settings in config.txt
+        FileWriter writer = new FileWriter("config.txt", false);
+        writer.write(username+System.lineSeparator()+host+System.lineSeparator()+port+System.lineSeparator());
+        writer.flush();
+        writer.close();
+        System.out.println(username+System.lineSeparator()+host+System.lineSeparator()+port+System.lineSeparator());
+        System.out.println("configurations saved to config.txt");
+
+        System.out.println("loading fxml");
+        //load fxml
+        this.stage = (Stage) btLogin.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ClientView.fxml"));
+        Parent root = loader.load();
+        //initialize controller
+        ClientViewController controller = (ClientViewController) loader.getController();
+        controller.setClient(client);
+        controller.setChatView();
+        client.setController(controller);
+        System.out.println("log");
+        stage.setMinWidth(1080);
+        stage.setMinHeight(720);
+        stage.setScene(new Scene(root, 1080, 720, Color.TRANSPARENT));
+        stage.show();
+    }
+
+    @FXML
+    void register(ActionEvent event) throws IOException {
         //initialize client thread
         host = hostnameField.getText();
         port =  Integer.parseInt(portField.getText());
