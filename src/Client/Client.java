@@ -170,16 +170,25 @@ public class Client implements Runnable {
                             this.currentuser = input.getUser();
                             break;
                         case "res-getAllUsers":
+                            // use this user list to add a user to a channel
                             break;
                         case "res-getMessagesForChannel":
+                            //update messages for a channel in channels here
                             break;
                         case "res-getUsersForChannel":
+                            // use this userlist to display in the side bar
+                            break;
+                        case "res-getChannelsForUser":
+                            // display channels on the side
                             break;
                         case "res-postMessage":
+                            // send a message/file
                             break;
                         case "res-addToChannel":
+                            // add a user to channel
                             break;
                         case "res-removeFromChannel":
+                            // remove a user from the channel
                             break;
                     }
                 }
