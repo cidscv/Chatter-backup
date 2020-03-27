@@ -40,25 +40,99 @@ public class ClientHandler implements Runnable {
             DataHandler dh = new DataHandler();
             try {
                 input = (Input)inputStream.readObject();
-                dh =
                 if (input != null) {
                     System.out.println("received data");
                     switch (input.getOperation()) {
                         case "register":
+                            try {
+                                User u = dh.getUser(input.getUser());
+                                Input res = new Input("res-register");
+                                res.setUser(u);
+                                this.outputStream.writeObject(res);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case "login":
+                            try {
+                                User u = dh.getUser(input.getUser());
+                                Input res = new Input("res-login");
+                                res.setUser(u);
+                                this.outputStream.writeObject(res);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case "getAllUsers":
+                            try {
+                                ArrayList<User> u = dh.getAllUsers();
+                                Input res = new Input("res-getAllUsers");
+                                res.setUsers(u);
+                                this.outputStream.writeObject(res);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case "getMessagesForChannel":
+                            try {
+                                ArrayList<Message> m = dh.getMessagesForChannel(input.getChannel());
+                                Input res = new Input("res-getMessagesForChannel");
+                                res.setMessages(m);
+                                this.outputStream.writeObject(res);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case "getUsersForChannel":
+                            try {
+                                ArrayList<User> u = dh.getUserForChannel(input.getChannel());
+                                Input res = new Input("res-getUsersForChannel");
+                                res.setUsers(u);
+                                this.outputStream.writeObject(res);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "getChannelsForUser":
+                            try {
+                                ArrayList<Channel> c = dh.getChannelsForUser(input.getUser().getId());
+                                Input res = new Input("res-getChannelsForUser");
+                                res.setChannels(c);
+                                this.outputStream.writeObject(res);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case "postMessage":
+                            // TODO figure out how to send message to everyone
+                            try {
+                                Message m = dh.createMessage(input.getMessage());
+                                Input res = new Input("res-postMessage");
+                                res.setMessage(m);
+                                this.outputStream.writeObject(res);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case "addToChannel":
+                            try {
+                                User u = dh.addToChannel(input.getUser(), input.getChannel());
+                                Input res = new Input("res-addToChannel");
+                                res.setUser(u);
+                                this.outputStream.writeObject(res);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case "removeFromChannel":
+                            try {
+                                User u = dh.removeFromChannel(input.getUser, input.getChannel());
+                                Input res = new Input("res-removeFromChannel");
+                                res.setUser(u);
+                                this.outputStream.writeObject(res);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
                             break;
                     }
                 }

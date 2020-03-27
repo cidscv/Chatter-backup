@@ -12,8 +12,6 @@ import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.sql.Types;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDriver;
-
 public class DataHandler {
 
     private String url;
@@ -114,16 +112,22 @@ public class DataHandler {
         }
     }
 
-    public ArrayList<String> getUserNamesForChannel(int channelid) throws Exception {
+    public ArrayList<User> getUsersForChannel(int channelid) throws Exception {
         ResultSet res = null;
-        ArrayList<String> users = new ArrayList<String>();
+        ArrayList<User> users = new ArrayList<User>();
         try {
             CallableStatement statement = this.connection.prepareCall("{call GetUsersForChannel(?)}");
             statement.setInt(1, channelid);
             statement.execute();
 
             while(res.next()) {
-                users.add(res.getString("username"));
+                int userdid = res.getInt("id");
+                users.add(new User(
+                        userid,
+                        res.getString("username"),
+                        res.getString("password"),
+                        this.getChannelsForUser(userid))
+                );
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -236,7 +240,7 @@ public class DataHandler {
 
     // channel-user functions
 
-    public void addToChannel(User user, Channel channel) throws Exception {
+    public User addToChannel(User user, Channel channel) throws Exception {
         try {
             CallableStatement statement = this.connection.prepareCall("{call AddToChannel(?,?)}");
 
@@ -244,12 +248,16 @@ public class DataHandler {
             statement.setInt(2, channel.getId());
 
             statement.execute();
+
+            user.addChannel(channel);
         } catch(Exception e) {
             e.printStackTrace();
+        } finally {
+            return user;
         }
     }
 
-    public void removeFromChannel(User user, Channel channel) throws Exception {
+    public User removeFromChannel(User user, Channel channel) throws Exception {
         try {
             CallableStatement statement = this.connection.prepareCall("{call RemoveFromChannel(?,?)}");
 
@@ -257,8 +265,12 @@ public class DataHandler {
             statement.setInt(2, channel.getId());
 
             statement.execute();
+
+            user.delChannel(channel);
         } catch(Exception e) {
             e.printStackTrace();
+        } finally {
+            return user;
         }
     }
 
