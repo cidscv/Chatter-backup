@@ -89,7 +89,17 @@ public class Client implements Runnable {
 
     public void getAllUsers() {
         try {
-            Input allusers = new Input("getallusers");
+            Input allusers = new Input("getAllUsers");
+            outputStream.writeObject(allusers);
+            outputStream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendMessage(Message newmessage) {
+        try {
+            Input allusers = new Input("postMessage");
             outputStream.writeObject(allusers);
             outputStream.flush();
         } catch (Exception e) {
