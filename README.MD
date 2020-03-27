@@ -19,8 +19,10 @@
 
 ### Run Program  
 
-> run server.server  
-> run client.clientgui  
+> create new gradle task -> assemble
+> run client/build/lib/client.jar 
+> run server.build/lib/server.jar
+> must start server before login, server is default set to localhost:9090  
 
 ### Dependencies  
 
