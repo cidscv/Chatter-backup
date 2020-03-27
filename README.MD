@@ -6,11 +6,11 @@
 
 ### Contributors  
 
-- Aurie Tan
-- Paras Chandhok  
-- Xavier Chanthavong  
-- Matthew Mui  
-- Owen Reid  
+- Aurie Tan "rieryn"  
+- Paras Chandhok "ParasUOIT"  
+- Matthew Mui (Pair programming with ParasUOIT)  
+- Xavier Chanthavong "XavierChanth"  
+- Owen Reid "cidscv"  
 
 ### Run Program  
 
