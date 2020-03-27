@@ -24,16 +24,4 @@
 
 > java jdk 11+  
 
-## Program Documentation  
-
-### Client  
-
-#### User Interface  
-
-#### Client-side Handlers  
-
-### Server  
-
-#### Server-side Handlers  
-
-#### Database  
+> v2 is most up to date branch
