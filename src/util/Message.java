@@ -8,11 +8,18 @@ public class Message implements Serializable {
   private User user;
   private Channel channel;
   private String message;
+  private byte[] bytes;
 
   public Message(User user, Channel channel, String message) {
     this.user = user;
     this.channel = channel;
     this.message = message;
+  }
+
+  public Message(User user, Channel channel, byte[] bytes) {
+    this.user = user;
+    this.channel = channel;
+    this.bytes = bytes;
   }
 
   public Message(Date id, User user, Channel channel, String message) {
@@ -47,6 +54,11 @@ public class Message implements Serializable {
 
   public String getMessage() {
     return this.message;
+  }
+
+  // bytes functions
+  public byte[] getBytes() {
+    return this.bytes;
   }
 
 }
