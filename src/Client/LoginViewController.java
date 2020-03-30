@@ -115,7 +115,7 @@ public class LoginViewController implements Initializable {
         //initialize controller
         ClientViewController controller = (ClientViewController) loader.getController();
         controller.setClient(client);
-        controller.setChatView();
+        //controller.setChatView();
         client.setController(controller);
         System.out.println("log");
         stage.setMinWidth(1080);
@@ -161,7 +161,7 @@ public class LoginViewController implements Initializable {
         //initialize controller
         ClientViewController controller = (ClientViewController) loader.getController();
         controller.setClient(client);
-        controller.setChatView();
+        //controller.setChatView();
         client.setController(controller);
         System.out.println("log");
         stage.setMinWidth(1080);

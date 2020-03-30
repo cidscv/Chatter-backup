@@ -17,6 +17,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.TextArea?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-size: 1200 900;-fx-background-radius: 30;-fx-border-radius: 30;-fx-border-width:5;-fx-background-color:#eef0ee;" fx:controller="Client.ClientViewController" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <VBox prefHeight="54.0" prefWidth="800.0" BorderPane.alignment="CENTER">
@@ -36,10 +37,10 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="BOTTOM_CENTER">
          <children>
-            <ListView fx:id="chatView" prefHeight="583.0" prefWidth="470.0" style="-fx-background-color: #f7e7e8;" VBox.vgrow="ALWAYS" />
+            <TextArea fx:id="chat" prefHeight="583.0" prefWidth="470.0" style="-fx-background-color: #f7e7e8;" VBox.vgrow="ALWAYS" />
             <HBox alignment="CENTER" prefHeight="7.0" prefWidth="470.0" style="-fx-background-color: #F0FFF0;">
                <children>
-                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#btSendFile" prefHeight="31.0" prefWidth="37.0" style="-fx-background-color: #F5FFFA; -fx-background-radius: 5;" text="+" />
+                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#btSendMessage" prefHeight="31.0" prefWidth="37.0" style="-fx-background-color: #F5FFFA; -fx-background-radius: 5;" text="+" />
                   <JFXTextArea fx:id="messageField" focusColor="#eaffcc" prefHeight="12.0" prefWidth="369.0" promptText="Type message..." style="-fx-background-radius: 40; -fx-border-radius: 40;" unFocusColor="#fcffc4" HBox.hgrow="ALWAYS" />
                   <Button fx:id="btSend" alignment="CENTER" mnemonicParsing="false" onAction="#btSendMessage" prefHeight="26.0" prefWidth="90.0" style="-fx-background-color: #AFEEEE; -fx-border-radius: 50; -fx-background-radius: 50;" text="Send" textFill="#464646" />
                </children>

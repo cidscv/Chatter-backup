@@ -20,6 +20,9 @@ public class Client implements Runnable {
     public Socket chatSocket;
     public ObjectInputStream inputStream;
 
+    DataOutputStream toServer = null;
+    DataInputStream fromServer = null;
+
     private int port = SocketSettings.getPort();
     public InetAddress host = InetAddress.getLocalHost();
     public ClientGUI clientGUI;
@@ -120,12 +123,26 @@ public class Client implements Runnable {
 
     public void sendMessage(Message newmessage) {
         try {
+            toServer = new DataOutputStream(chatSocket.getOutputStream());
             Input postmessages = new Input("postMessage");
+            System.out.println(newmessage.getMessage());
+            String m = newmessage.getMessage();
+            System.out.println(m);
             outputStream.writeObject(postmessages);
             outputStream.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
+            toServer.writeUTF(m);
+            toServer.flush();
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+    }
+
+    public String getMessage() throws IOException {
+        fromServer = new DataInputStream(chatSocket.getInputStream());
+        String finalmessage = fromServer.readUTF();
+        return finalmessage;
     }
 
     public void getMessagesForChannel() {
@@ -190,7 +207,7 @@ public class Client implements Runnable {
             }
             Input input=null;
             try {
-                input = (Input)inputStream.readObject();
+                //input = (Input)inputStream.readObject();
                 if (input != null) {
                     System.out.println("received data");
                     switch (input.getOperation()) {
@@ -218,7 +235,7 @@ public class Client implements Runnable {
                             this.userChannels = input.getChannelList();
                             break;
                         case "res-postMessage":
-                            // send a message
+
                             break;
                         case "res-addToChannel":
                             // add a user to channel

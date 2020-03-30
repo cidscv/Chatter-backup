@@ -4,14 +4,8 @@ import com.jfoenix.controls.JFXTextArea;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+
 
 import javafx.scene.image.Image;
 
@@ -22,11 +16,7 @@ import javafx.stage.FileChooser;
 
 import util.Message;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
-import java.io.IOException;
+import java.io.*;
 
 public class ClientViewController {
 
@@ -34,6 +24,8 @@ public class ClientViewController {
     private ObservableList<String> chatLog;
     private String username;
     private String userImage;
+
+
 
 
     @FXML
@@ -100,7 +92,7 @@ public class ClientViewController {
     private ListView<?> userView;
 
     @FXML
-    private ListView<String> chatView;
+    private TextArea chat;
 
     @FXML
     private Button addButton;
@@ -136,9 +128,11 @@ public class ClientViewController {
     @FXML
     void btSendMessage(ActionEvent event) throws IOException {
         String msg = messageField.getText();
-        Message m = new Message(client.getCurrentUser(), client.getCurrentChannel(), msg);
+        System.out.println(msg);
+        Message m = new Message(msg);
         client.sendMessage(m);
         messageField.clear();
+        chat.appendText(client.getMessage());
     }
 
     @FXML
@@ -154,8 +148,5 @@ public class ClientViewController {
 
     public void setClient(Client client){
         this.client = client;
-    }
-    public void setChatView(){
-        chatView.setItems(client.chatLog);
     }
 }

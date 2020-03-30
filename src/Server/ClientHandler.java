@@ -1,10 +1,9 @@
 package Server;
 
+import javafx.application.Platform;
 import util.*;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import java.util.ArrayList;
 
@@ -41,12 +40,14 @@ public class ClientHandler implements Runnable {
         while (client.isConnected()) {
             System.out.println("listening");
             Input input = null;
-            DataHandler dh = new DataHandler();
             try {
+                DataInputStream inputFromClient = new DataInputStream(client.getInputStream());
+                DataOutputStream outputToClient = new DataOutputStream(client.getOutputStream());
                 input = (Input)inputStream.readObject();
                 if (input != null) {
                     System.out.println("received data");
                     switch (input.getOperation()) {
+                        /*
                         case "register":
                             try {
                                 User u = dh.createUser(input.getUser());
@@ -107,17 +108,26 @@ public class ClientHandler implements Runnable {
                                 e.printStackTrace();
                             }
                             break;
+
+                         */
                         case "postMessage":
                             // TODO figure out how to send message to everyone
                             try {
-                                Message m = dh.createMessage(input.getMessage());
+                                System.out.println("WORKING");
+                                Message m = input.getMessage();
+                                String messge = inputFromClient.readUTF();
+
+                                System.out.println(messge);
+                                outputToClient.writeUTF(messge);
                                 Input res = new Input("res-postMessage");
+
                                 res.setMessage(m);
                                 this.outputStream.writeObject(res);
                             } catch(Exception e) {
                                 e.printStackTrace();
                             }
                             break;
+                            /*
                         case "addToChannel":
                             try {
                                 User u = dh.addToChannel(input.getUser(), input.getChannel());
@@ -138,16 +148,14 @@ public class ClientHandler implements Runnable {
                                 e.printStackTrace();
                             }
                             break;
+
+                             */
                     }
                 }
                 //means the socket is closed PROBABLY OR THERE'S SOME OTHER ERROR ಥ_ಥ
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println(client+": connection closed");
-                try {
-                    server.updateClientlist(this);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+
                 //terminate thread
                 return;
             }

@@ -19,7 +19,7 @@ public class DataHandler {
     private Connection connection;
 
     DataHandler() {
-        this.url = "jdbc:sqlserver://192.168.1.52:1433;DatabaseName=ChatterProject;user=project;password=Pa55word";
+        this.url = "localhost";
         try {
             this.refreshConnection();
         } catch (Exception e) {

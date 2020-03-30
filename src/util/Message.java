@@ -9,9 +9,7 @@ public class Message implements Serializable {
   private Channel channel;
   private String message;
 
-  public Message(User user, Channel channel, String message) {
-    this.user = user;
-    this.channel = channel;
+  public Message(String message) {
     this.message = message;
   }
 
