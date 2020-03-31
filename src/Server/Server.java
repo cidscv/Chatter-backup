@@ -1,5 +1,6 @@
 package Server;
 
+import javafx.application.Platform;
 import util.*;
 
 import java.io.ObjectOutputStream;
@@ -12,6 +13,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 
@@ -36,6 +38,7 @@ public class Server {
     }
 
     public void startServer() throws IOException {
+        /*
         System.out.println("chat server started on "+ serverAddress());
         System.out.println("listening on port "+port);
         clientList = new ArrayList<ClientHandler>();
@@ -50,7 +53,31 @@ public class Server {
             t.start();
             //updateClientlist();
             System.out.println("Total clients: " + clientList.size());
-        }
+        }*/
+        new Thread( () -> {
+            try {
+
+                System.out.println("MultiThreadServer started at " + new Date() + '\n');
+
+                while (true) {
+
+                    Socket client = socket.accept();
+
+                    System.out.println("Starting thread for client " + client.getRemoteSocketAddress() + " at " + new Date() + '\n');
+
+                    InetAddress inetAddress = socket.getInetAddress();
+                    System.out.println("Client " + client.getRemoteSocketAddress() + "'s host name is " + inetAddress.getHostName() + "\n");
+                    System.out.println("Client " + client.getRemoteSocketAddress() + "'s IP Address is " + inetAddress.getHostAddress() + "\n");
+
+
+
+                    new Thread(new ClientHandler(client, this)).start();
+                }
+            }
+            catch(IOException ex) {
+                System.err.println(ex);
+            }
+        }).start();
     }
     public void updateClientlist(ClientHandler handler) throws IOException {
         clientList.remove(handler);

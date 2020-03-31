@@ -106,8 +106,9 @@ public class Client implements Runnable {
 
     public void login(Input loginput) {
         try {
-            outputStream.writeObject(loginput);
-            outputStream.flush();
+            System.out.println("HI");
+            //outputStream.writeObject(loginput);
+            //outputStream.flush();
         } catch (Exception e) {
             e.printStackTrace();
         }
