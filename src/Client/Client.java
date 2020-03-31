@@ -62,9 +62,15 @@ public class Client implements Runnable {
 
     private void initialize() throws IOException {
         // connect to server
+        BufferedReader configfile = new BufferedReader(new FileReader("config.txt"));
+        configfile.readLine();
+        String hostname = configfile.readLine();
+        System.out.println("host " + hostname);
+        configfile.close();
         System.out.println("Connecting to server...");
         try {
             host = InetAddress.getLocalHost();
+            System.out.println(host);
         } catch (UnknownHostException e) {
             e.printStackTrace();
             System.out.println("Unknown Host");
@@ -72,7 +78,7 @@ public class Client implements Runnable {
         System.out.println("Connected to: " + host.getHostAddress());
 
         try {
-            chatSocket = new Socket(host, port);
+            chatSocket = new Socket(hostname, port);
             chatSocket.setReuseAddress(true);
         } catch (IOException e) {
             e.printStackTrace();
