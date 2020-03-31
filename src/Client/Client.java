@@ -12,6 +12,8 @@ import java.net.UnknownHostException;
 import java.net.InetAddress;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import util.*;
 
 public class Client implements Runnable {
@@ -137,6 +139,15 @@ public class Client implements Runnable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public String loadFile() throws IOException {
+
+            BufferedReader configfile = new BufferedReader(new FileReader("config.txt"));
+            String username = configfile.readLine();
+            configfile.close();
+            return username;
+
     }
 
     public String getMessage() throws IOException {

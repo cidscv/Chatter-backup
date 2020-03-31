@@ -117,12 +117,12 @@ public class ClientHandler implements Runnable {
                                 Message m = input.getMessage();
                                 String messge = inputFromClient.readUTF();
 
-                                System.out.println(messge);
+                                System.out.println("message: " + messge);
                                 outputToClient.writeUTF(messge);
-                                Input res = new Input("res-postMessage");
+                                //Input res = new Input("res-postMessage");
 
-                                res.setMessage(m);
-                                this.outputStream.writeObject(res);
+                                //res.setMessage(m);
+                                //this.outputStream.writeObject(res);
                             } catch(Exception e) {
                                 e.printStackTrace();
                             }

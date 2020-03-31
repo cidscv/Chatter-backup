@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-
 import javafx.scene.image.Image;
 
 import javafx.scene.image.ImageView;
@@ -24,9 +23,6 @@ public class ClientViewController {
     private ObservableList<String> chatLog;
     private String username;
     private String userImage;
-
-
-
 
     @FXML
     private Label bannerLabel;
@@ -132,7 +128,8 @@ public class ClientViewController {
         Message m = new Message(msg);
         client.sendMessage(m);
         messageField.clear();
-        chat.appendText(client.getMessage());
+        chat.appendText(client.loadFile() + ": " + client.getMessage() + "\n");
+
     }
 
     @FXML
